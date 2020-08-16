@@ -43,6 +43,7 @@ router.route('/generate').post(auth, async (req, res) => {
             course: courseName, 
             members: memberIds
         });
+
         await newGroup.save();
 
         res.json(newGroup);
