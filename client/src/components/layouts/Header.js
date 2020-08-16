@@ -1,12 +1,13 @@
 import React from 'react';
 import Logo from '../logo.png';
+import DropdownMenu from '../DropdownMenu';
 
 class Header extends React.Component {
   
 	state = {
-		loggedIn: this.props.loggedIn.user
+		loggedIn: this.props.loggedIn.user,
 	}
-	onClick =(e) => {
+	onLogout =(e) => {
 		this.setState({
 			loggedIn: false
 		})
@@ -23,25 +24,12 @@ class Header extends React.Component {
 				}}>
 					<img src={Logo} alt='logo' style={{display: 'block', width: 'auto', height: '50px', marginTop: '37px', marginRight: '-10px'}}></img>
 				<h1 style={{margin: '20px', textAlign: 'center'}}>binder</h1>
-				{this.props.loggedIn.user ? <button style={btnStyle} onClick={this.onClick}>Logout</button>: null}
+				{this.props.loggedIn.user ? <DropdownMenu onLogout={this.onLogout} user={this.props.loggedIn.user} />: null}
 				</div>
 			</header>
 		);
 	}
 	
-}
-
-const btnStyle = {
-	border: 'none',
-	backgroundColor: '#ccc',
-	padding: 'none',
-	color: 'black',
-	fontSize: '0.5em',
-	float: 'right',
-	position: 'absolute',
-	right: '0',
-	borderRadius: '4px'
-
 }
 
 const headerStyle = {
