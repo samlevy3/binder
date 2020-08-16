@@ -8,10 +8,29 @@ const groupsModel = require('../../models/groupsModel');
 
 router.route('/generate').post(auth, async (req, res) => {
     try {
+
       const id = req.user
       const user = await userModel.findById(id);
       const courseName= req.body.courseName;
-      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)      
+      const smallGroups = await groupsModel.find({ course: courseName});
+      let smallGroup = "";
+      for (let index = 0; index < smallGroups.length; index++) {
+        if (smallGroups[index].members.length < 4) {
+            smallGroup = smallGroups[index];
+            break;
+        }
+      }
+      if (smallGroup) {
+        const response = await groupsModel.updateOne({_id: smallGroup._id}, {$addToSet: {members: 
+            {
+                name: user.name,
+                id: user._id,
+                phone: user.phone,
+                email: user.email
+        }}});
+        return res.json(smallGroup);
+      }
+      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
         
       if (members.length > 1) {
         for (let index = 0; index < members.length; index++) {
