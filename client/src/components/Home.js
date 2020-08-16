@@ -6,7 +6,7 @@ import axios from 'axios'
 class Home extends Component {
 
     state = {
-        courses: this.props.user.class,
+        courses: this.props.user.classes,
         groupDisplay: false,
         currGroup: null,
         groups: []   
@@ -18,7 +18,6 @@ class Home extends Component {
         await axios.get('/api/groups/forUser', {headers: {"x-auth-token": token}} ).then(res => {
             const groups = res.data;
             this.setState({
-                courses: this.state.courses,
                 groupDisplay: false,
                 currGroup: null,
                 groups
@@ -27,6 +26,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.user.classes);
         this.checkGroups();
     }
 
@@ -82,7 +82,8 @@ class Home extends Component {
     }
 
     generateGroups = async () => {
-        if (this.state.courses !== null) {
+        console.log(this.state.courses)
+        if (this.state.courses) {
             console.log(this.state.courses)
             let token = localStorage.getItem("auth-token");
             let groups = []
