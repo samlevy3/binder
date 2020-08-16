@@ -93,7 +93,7 @@ class App extends React.Component {
         <Route path = '/home' render={props => (
          <React.Fragment>
 
-           <Home user={this.state.userData.user}/>
+           <Home user={this.state.userData}/>
 
           </React.Fragment>
         )}/>
