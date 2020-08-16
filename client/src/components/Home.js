@@ -18,8 +18,6 @@ class Home extends Component {
         await axios.get('/api/groups/forUser', {headers: {"x-auth-token": token}} ).then(res => {
             const groups = res.data;
             this.setState({
-                groupDisplay: false,
-                currGroup: null,
                 groups
             })
         });
@@ -31,6 +29,7 @@ class Home extends Component {
     }
 
     render() {
+        
         if (this.state.groups.length > 0) {
             return (
                 <div>
@@ -73,44 +72,42 @@ class Home extends Component {
             }
         })
         this.setState({ 
-            courses: this.state.courses, 
             groupDisplay: groupSelected ? true : false,
-            currGroup: groupSelected,
-            groups: this.state.groups
+            currGroup: groupSelected
+
         });
         
     }
 
     generateGroups = async () => {
-        console.log(this.state.courses)
-        if (this.state.courses) {
-            console.log(this.state.courses)
+
+        const courses = this.props.user.classes
+        if (courses) {
             let token = localStorage.getItem("auth-token");
             let groups = []
-            for (let i = 0; i<this.state.courses.length; i++) {
-                console.log(`Generating group for ${this.state.courses[i].name}`)
-                await axios.post('/api/groups/generate', {courseName: this.state.courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
+            for (let i = 0; i<courses.length; i++) {
+                console.log(`Generating group for ${courses[i].name}`)
+                await axios.post('/api/groups/generate', {courseName: courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
                    if (res.data.msg === null) {
                       groups.push(res.data)
                     }
-                    console.log(`Results for ${this.state.courses[i].name}: ${res.data}`)
+                    console.log(res.data)
                 })
              
             }
             
             this.setState({
-                courses: this.state.courses,
-                groupDisplay: false,
-                currGroup: null,
-                groups,
+                courses,
+                groups
+
             })
             this.checkGroups();
         }
+        this.checkGroups()
         
     }
 
     
-
 }
 const btnStyle= {
     position: "absolute",
