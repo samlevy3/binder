@@ -43,7 +43,7 @@ class Home extends Component {
                         />
                     </div>
                     <div style={{float:"left"}}>
-                        <GroupBox group={this.state.currGroup} visible={this.state.groupDisplay} userName={this.props.user.name} />
+                        <GroupBox group={this.state.currGroup} visible={this.state.groupDisplay} userEmail={this.props.user.email} />
                     </div>
                     
                 </div>
