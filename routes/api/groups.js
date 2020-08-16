@@ -38,6 +38,7 @@ router.route('/generate').post(auth, async (req, res) => {
         }
         let memberIds = []
         members.forEach(member => memberIds.push({id: member._id, name: member.name, phone: member.phone, email: member.email}))
+
         const newGroup = new groupsModel({
             course: courseName, 
             members: memberIds

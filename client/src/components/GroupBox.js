@@ -3,25 +3,16 @@ import FriendList from "./FriendList"
 
 class GroupBox extends Component {
 
-    state = {
-        courseName: '',
-        memberIds: [] //store user ids
-    }
 
     render() {
         
         if (this.props.visible) {
             const group = this.props.group
-            let memberNames = [];
-            let i = 0;
-            group.members.forEach(memberId => {
-                memberNames[i] = `${names[i]} with ID ${memberId}`//replace this with fetching ids
-                i += 1
-            });
+            
             return (
                 <div style={groupBoxStyle}>
-                    <h4 >{`Group for ${group.course}`}</h4> 
-                    <FriendList members={group.members}/>
+                    <h4 style={{color: '#4b2e83'}}>{`Group Members for ${group.course}`}</h4> 
+                    <FriendList members={group.members.filter(member => member.name !== this.props.userName)}/>
                 </div>
                 
             );
@@ -41,8 +32,6 @@ class GroupBox extends Component {
 
 
 }
-
-const names = ["Bob", "Joe", "Fred", "Sam"]
 
 const groupBoxStyle = {
     margin: '20px', 

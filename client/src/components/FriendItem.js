@@ -16,11 +16,12 @@ class FriendItem extends Component {
 
 const style = {
     backgroundColor:  '#fff' ,
+    color: '#4b2e83',
     border: "none",
-    borderTop: "solid #4b2e83 1px",
+    borderTop: "dotted #4b2e83 1px",
     paddingTop: "5px",
     fontSize: "12px",
-    width: "80%",
+    width: "100%",
     textAlign: "center",
 
 }

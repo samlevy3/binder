@@ -5,11 +5,14 @@ import axios from 'axios'
 
 class Home extends Component {
 
+    
     state = {
         courses: this.props.user.classes,
         groupDisplay: false,
         currGroup: null,
-        groups: []   
+        groups: [] ,
+        msg: "Looks like you don't have any study groups yet. Click below to find some study partners!"
+ 
     }
 
 
@@ -24,7 +27,6 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.user.classes);
         this.checkGroups();
     }
 
@@ -41,7 +43,7 @@ class Home extends Component {
                         />
                     </div>
                     <div style={{float:"left"}}>
-                        <GroupBox group={this.state.currGroup} visible={this.state.groupDisplay}  />
+                        <GroupBox group={this.state.currGroup} visible={this.state.groupDisplay} userName={this.props.user.name} />
                     </div>
                     
                 </div>
@@ -53,7 +55,7 @@ class Home extends Component {
             return (
                 <div style={centered}>
                     <p style={{textAlign: "center"}}>
-                        Looks like you don't have any study groups yet. Click below to find some study partners!
+                        {this.state.msg}
                     </p>
                     <button style={btnStyle} onClick={this.generateGroups}>Find Groups!</button>
                 </div>
@@ -81,22 +83,26 @@ class Home extends Component {
 
     generateGroups = async () => {
         const courses = this.props.user.classes
+        
         if (courses) {
+            
             let token = localStorage.getItem("auth-token");
             let groups = []
             for (let i = 0; i<courses.length; i++) {
-                console.log(`Generating group for ${courses[i].name}`)
                 await axios.post('/api/groups/generate', {courseName: courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
                    if (res.data.msg === null) {
                       groups.push(res.data)
-                    }
+
+                    } 
+
                 })
              
             }
-            
+            let showMsg = groups.length === 0
             this.setState({
                 courses,
-                groups
+                groups,
+                msg: showMsg ? "Unfortunately there are no available study partners at this time. Please try again later." : undefined
 
             })
             this.checkGroups();
@@ -107,16 +113,18 @@ class Home extends Component {
 
     
 }
+
+
 const btnStyle= {
     position: "absolute",
     left: "50%",
     msTransform: "translateX(-50%)",
     transform: 'translateX(-50%)',
-    backgroundColor: '#FFA500',
+    backgroundColor: '#4b2e83',
     borderRadius: "5px",
     border: "none",
     padding: "5px 10px",
-    color: "#000"
+    color: "#fff"
 }
 
 const centered = {
