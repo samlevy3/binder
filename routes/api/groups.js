@@ -56,6 +56,16 @@ router.route('/all').get(async (req, res) => {
     
 })
 
+router.route('/:course').get(async (req, res) => {
+    const groups = await groupsModel.find({course: req.params.course})
+    if (groups){
+        res.json(groups)
+    } else {
+        res.json({msg: "Error"})
+    }
+    
+})
+
 async function updateGroupStatusForMember(member, courseName) {
     let updatedClasses = member.classes;
     updatedClasses.forEach(course => {
