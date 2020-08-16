@@ -4,19 +4,14 @@ import CourseItem from './CourseItem';
 class CourseList extends React.Component {
   
     render() {
-        if (this.props.courses.length === 0){
-            return (
-                <div >
-                    No courses added
-                </div>
-            )
-        } else {
-            return (
-                this.props.courses.map((course, index) => (
-                    <CourseItem key={index} courseName={course.name} deleteCourse={this.props.deleteCourse}/>
-                ))
-            )
-        }
+        return (
+            <div style={{height:'150px', overflowY: 'scroll', margin: '10px'}}>
+                {this.props.courses.map((course) => (
+                    <CourseItem key={course._id} courseName={course.name} deleteCourse={this.props.deleteCourse}/>
+                ))}
+            </div>
+            
+        )
   }
 }
 

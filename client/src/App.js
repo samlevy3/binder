@@ -7,7 +7,6 @@ import Header from './components/layouts/Header';
 
 import Home from './components/Home'
 import {  Router, Route } from 'react-router-dom';
-import Welcome from './components/Welcome';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -79,15 +78,12 @@ class App extends React.Component {
       <Router history={history}>
         <Header logout={this.logout} loggedIn={this.state.userData}/>
         <div>
-
-        <Route exact path='/' component={Welcome}/>
-
         <Route exact path="/register" render={props => (
          <React.Fragment>
            <NewUser register={this.register}/>
           </React.Fragment>
         )}/>
-      <Route exact path="/login" render={props => (
+      <Route exact path="/" render={props => (
          <React.Fragment>
            <Login login={this.login}/>
           </React.Fragment>
