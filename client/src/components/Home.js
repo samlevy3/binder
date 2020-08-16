@@ -29,8 +29,6 @@ class Home extends Component {
         if (this.userHasGroups()) {
             return (
                 <div>
-                    
-                    
                     <div style={courseBoxStyle}>
                         <h1 style={{textAlign:"center"}}>Groups</h1>
                         <Courses 

@@ -35,13 +35,18 @@ class NewUser extends React.Component {
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
     addCourse = (course) => {
+        let courseObject = {
+            name: course,
+            inGroup: false,
+            _id: this.state.email
+        }
         let courses = this.state.courses;
-        courses.push(course);
+        courses.push(courseObject);
         this.setState({courses});
     }
 
     deleteCourse = (course) => {
-        this.setState({ courses : [...this.state.courses.filter( c => c !== course)]})
+        this.setState({ courses : [...this.state.courses.filter( c => c.name !== course)]})
     }
 
   render() {
