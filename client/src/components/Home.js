@@ -95,7 +95,7 @@ class Home extends Component {
 
                     } 
 
-            })
+                })
              
             }
             let showMsg = groups.length === 0
