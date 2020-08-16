@@ -11,25 +11,33 @@ router.route('/generate').post(auth, async (req, res) => {
       const id = req.user
       const user = await userModel.findById(id);
       const courseName= req.body.courseName;
-      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
-    
-      if (members.some(member => member._id === user._id)) { 
-        members.push(user)
-      }
-   
+      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3);
+      console.log(members.length);
       if (members.length > 1) {
-        
+        let memberIds = [
+            {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            }
+        ]
+
         for (let index = 0; index < members.length; index++) {
-            await updateGroupStatusForMember(members[index], courseName);
+            memberIds.push({id: members[index]._id, name: members[index].name, email: members[index].email, phone: members[index].phone});
         }
-    
-        let memberIds = []
-        members.forEach(member => memberIds.push({id: member.id}))
+       
+        console.log(memberIds);
         const newGroup = new groupsModel({
             course: courseName, 
             members: memberIds
         });
+
         const savedGroup = await newGroup.save();
+
+        for (let index = 0; index < members.length; index++) {
+            await updateGroupStatusForMember(members[index], courseName);
+       }
 
         res.json({
             courseName,
@@ -73,10 +81,10 @@ async function updateGroupStatusForMember(member, courseName) {
         }
     })
     await userModel.updateOne(
-        {_id: member._id, classes: courseName}, 
+        {_id: member._id}, 
         {
             $set: {
-                inGroup: false
+                classes: updatedClasses
             }
             
         })

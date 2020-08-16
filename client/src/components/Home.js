@@ -104,8 +104,8 @@ class Home extends Component {
                 currGroup: null,
                 groups,
             })
+            this.checkGroups();
         }
-        
         
     }
 
