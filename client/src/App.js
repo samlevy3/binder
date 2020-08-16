@@ -18,13 +18,13 @@ class App extends React.Component {
       }
   }
 
-  register = async(name, email, password, phone, courses) => {
+  register = async(name, email, password, phone, classes) => {
       await axios.post('api/users/register', {
         name, 
         email,
         password,
         phone,
-        courses
+        classes
       })
       this.login(email, password);
   }
