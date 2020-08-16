@@ -51,9 +51,10 @@ class NewUser extends React.Component {
 
   render() {
     return (
+    <div>
+         New User! Sign up now!
       <div style={{padding: '10px'}}>
-        New User! Sign up now!
-        <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%'}}>
+        <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float:'left'}}>
                 <input 
 			  		type="text" 
 					name="name"
@@ -98,14 +99,15 @@ class NewUser extends React.Component {
 					type="submit"
 					value="Submit"
 					className="btn"
-					style={{flex: '1'}}
+					style={{flex: '1', float: 'right'}}
 				/>
 			</form>
-            <div>
+      </div>
+      <div style={{float: 'right', width: '45%', height: '55%'}}>
                 <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
                 <AddCourse addCourse={this.addCourse}/>
-            </div>
-      </div>
+    </div>
+    </div>
       
     )
   }
