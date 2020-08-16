@@ -7,7 +7,7 @@ class FriendItem extends Component {
                 <p style={style}>
                     Name: {this.props.member.name}<br></br>
                     Email: {this.props.member.email}<br></br>
-                    Phone: {this.props.member.phone}
+                    Phone Number: {this.props.member.phone}
                 </p>
                
             </div>
@@ -21,7 +21,7 @@ const style = {
     borderTop: "solid #4b2e83 1px",
     paddingTop: "5px",
     fontSize: "12px",
-    width: "80%",
+    width: "100%",
     textAlign: "center",
 
 }
