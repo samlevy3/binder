@@ -17,9 +17,9 @@ class App extends React.Component {
       token: undefined,
       user: undefined
       }
-    }
+  }
 
-    register = async(name, email, password, phone, courses) => {
+  register = async(name, email, password, phone, courses) => {
       await axios.post('api/users/register', {
         name, 
         email,
@@ -28,9 +28,9 @@ class App extends React.Component {
         courses
       })
       this.login(email, password);
-    }
+  }
 
-    login = async (email, password) => {
+  login = async (email, password) => {
       if (!email || !password) {
         return alert("Please Enter All Fields");
       }
@@ -41,9 +41,9 @@ class App extends React.Component {
       }});
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push('/home');
-    }
+  }
     
-    checkIfLoggedIn = async () => {
+  checkIfLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
         if (token === null) {
           localStorage.setItem("auth-token", "");
@@ -56,17 +56,19 @@ class App extends React.Component {
           });
           this.setState({userData: {
             token,
-      user: userRes.data,
+            user: userRes.data,
           }});
           history.push('/home');
         }
-    }
+  }
 
   componentDidMount() {
     this.checkIfLoggedIn();
+    
   }
   
   render() {
+    
     return (
       <Router history={history}>
         <Header />
@@ -87,7 +89,9 @@ class App extends React.Component {
         {this.state.userData.user ? 
         <Route path = '/home' render={props => (
          <React.Fragment>
-           <Home user={this.state.userData.user}/>
+
+           <Home user={this.state.userData.user ? this.state.userData.user : null}/>
+
           </React.Fragment>
         )}/>
         : <Route path='/home' component={Welcome}/>}
