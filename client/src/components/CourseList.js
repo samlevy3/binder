@@ -6,14 +6,14 @@ class CourseList extends React.Component {
     render() {
         if (this.props.courses.length === 0){
             return (
-                <div>
+                <div >
                     No courses added
                 </div>
             )
         } else {
             return (
                 this.props.courses.map((course) => (
-                    <CourseItem key={course} courseName={course} deleteCourse={this.props.deleteCourse}/>
+                    <CourseItem key={course.name} courseName={course.name} deleteCourse={this.props.deleteCourse}/>
                 ))
             )
         }

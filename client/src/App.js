@@ -3,6 +3,7 @@ import './App.css';
 import NewUser from './components/NewUser';
 import Login from './components/Login';
 import history from './history';
+import Header from './components/layouts/Header';
 
 import Home from './components/Home'
 import {  Router, Route } from 'react-router-dom';
@@ -70,6 +71,7 @@ class App extends React.Component {
     
     return (
       <Router history={history}>
+        <Header />
         <div>
 
         <Route exact path='/' component={Welcome}/>
@@ -84,12 +86,15 @@ class App extends React.Component {
            <Login login={this.login}/>
           </React.Fragment>
         )}/>
-
+        {this.state.userData.user ? 
         <Route path = '/home' render={props => (
          <React.Fragment>
+
            <Home user={this.state.userData.user ? this.state.userData.user : null}/>
+
           </React.Fragment>
         )}/>
+        : <Route path='/home' component={Welcome}/>}
         </div>
       </Router>
     );
