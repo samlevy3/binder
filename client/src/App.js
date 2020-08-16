@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+
+import Home from './components/Home'
 import {   BrowserRouter as Router, Route } from 'react-router-dom';
 import Welcome from './components/Welcome';
 import axios from 'axios';
@@ -50,6 +52,7 @@ class App extends React.Component {
   
   render() {
     return (
+
       <Router>
         <div>
         <Route render={props => (
@@ -60,6 +63,7 @@ class App extends React.Component {
         </div>
       </Router>
     );
+
   }
 }
 
