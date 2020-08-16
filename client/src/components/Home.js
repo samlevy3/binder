@@ -80,7 +80,6 @@ class Home extends Component {
     }
 
     generateGroups = async () => {
-
         const courses = this.props.user.classes
         if (courses) {
             let token = localStorage.getItem("auth-token");
@@ -91,7 +90,6 @@ class Home extends Component {
                    if (res.data.msg === null) {
                       groups.push(res.data)
                     }
-                    console.log(res.data)
                 })
              
             }

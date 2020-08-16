@@ -42,7 +42,6 @@ router.route('/generate').post(auth, async (req, res) => {
 
 router.route('/forUser').get( auth, async (req, res) => {
     try {
-        console.log(req.user)
         const groups = await groupsModel.find({ members: {$elemMatch: {id: req.user}}})
         res.json(groups)
     } catch (err) {
@@ -53,6 +52,16 @@ router.route('/forUser').get( auth, async (req, res) => {
 
 router.route('/all').get(async (req, res) => {
     const groups = await groupsModel.find()
+    if (groups){
+        res.json(groups)
+    } else {
+        res.json({msg: "Error"})
+    }
+    
+})
+
+router.route('/:course').get(async (req, res) => {
+    const groups = await groupsModel.find({course: req.params.course})
     if (groups){
         res.json(groups)
     } else {
