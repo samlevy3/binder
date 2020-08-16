@@ -4,7 +4,7 @@ class FriendItem extends Component {
     render() {
         return (
             <div>
-                <p style={style}>{this.props.member.id}</p>
+                <p style={style}>{this.props.member.name}</p>
             </div>
         );
     }
