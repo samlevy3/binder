@@ -2,30 +2,39 @@ const express = require('express');
 const router = express.Router();
 const auth = require ('../../middleware/auth');
 const userModel = require('../../models/userModel');
-const groupsModel = require('../../models/groupsModel')
+const groupsModel = require('../../models/groupsModel');
+const { log } = require('console');
 
-router.route('/generate').post( async (req, res) => {
+router.route('/generate').post( auth, async (req, res) => {
+    const id = req.user
+    const user = await userModel.find({_id: id})
     const courseName= req.body.courseName;
-    const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}})
-    if (members.length > 0) {
-        res.json({
-            courseName,
-            members
-        });
+    const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
+    console.log(`Original: ${members}`)
+    console.log(`User: ${user}`)
+    if (members.some(member => member._id === user._id)) { 
+        members.push(user)
+    }
+    console.log(`Following request: ${members}`)
+    console.log(members.length)
+    if (members.length > 1) {
         
-       
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
         }
     
         let memberIds = []
-        members.forEach(member => memberIds.push(member.id))
-        console.log(memberIds)
+        members.forEach(member => memberIds.push({id: member.id}))
         const newGroup = new groupsModel({
             course: courseName, 
             members: memberIds
         });
         const savedGroup = await newGroup.save();
+
+        res.json({
+            courseName,
+            members
+        });
     } else {
         res.json({msg: "Oops, doesn't look like you have any friends"})
     }
@@ -34,7 +43,16 @@ router.route('/generate').post( async (req, res) => {
    
 });
 
-
+router.route('/forUser').get( auth, async (req, res) => {
+    try {
+     
+        const groups = await groupsModel.find({ members: {$elemMatch: {id: req.user}}})
+        res.json(groups)
+    } catch (err) {
+        res.json({err: err.message})
+    }
+    
+});
 
 router.route('/all').get(async (req, res) => {
     const groups = await groupsModel.find()

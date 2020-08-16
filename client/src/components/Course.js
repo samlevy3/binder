@@ -7,7 +7,7 @@ class Course extends Component {
         clicked: false
     }
     render() {
-        const name = this.props.course
+        const name = this.props.course.name
         return (
             <div >
                 <button onClick={this.props.courseClicked.bind(this, name)} style={btnStyle} >

@@ -6,30 +6,32 @@ import axios from 'axios'
 class Home extends Component {
 
     state = {
-        courses: ["Physics 2212", "Math 2552", "CS 1331"],
+        courses: this.props.user.class,
         groupDisplay: false,
         currGroup: null,
         groups: []   
     }
 
-    componentDidMount() {
-        console.log("Mounting")
-        axios.post('/api/groups/generate', {courseName: "PHYS 2212"}).then(res => console.log(res.data))
-        // axios.get('/groups').then(res => this.setState({
-        //     courses: ["Physics 2212", "Math 2552", "CS 1331"],
-        //     groupDisplay: false,
-        //     currGroup: null,
-        //     groups: res.data
-        // }))
+
+    checkGroups = async () => {
+        let token = localStorage.getItem("auth-token");
+        await axios.get('/api/groups/forUser', {headers: {"x-auth-token": token}} ).then(res => {
+            const groups = res.data;
+            this.setState({
+                courses: this.state.courses,
+                groupDisplay: false,
+                currGroup: null,
+                groups
+            })
+        });
     }
 
-    userHasGroups() {
-        return (this.state.groups.length !== 0);
+    componentDidMount() {
+        this.checkGroups();
     }
 
     render() {
-
-        if (this.userHasGroups()) {
+        if (this.state.groups.length > 0) {
             return (
                 <div>
                     <div style={courseBoxStyle}>
@@ -40,7 +42,7 @@ class Home extends Component {
                         />
                     </div>
                     <div style={{float:"left"}}>
-                        <GroupBox visible={this.state.groupDisplay} group={this.state.currGroup} />
+                        <GroupBox group={this.state.currGroup} visible={this.state.groupDisplay}  />
                     </div>
                     
                 </div>
@@ -63,42 +65,50 @@ class Home extends Component {
 
     
     courseClicked = (name) => {
-        let groupSelected = null;
+        let groupSelected = undefined;
         this.state.groups.forEach(group => {
-            if (group.courseName === name) {
+            if (group.course === name) {
                 groupSelected = group;
-            
+                
             }
         })
         this.setState({ 
             courses: this.state.courses, 
-            groupDisplay: true,
+            groupDisplay: groupSelected ? true : false,
             currGroup: groupSelected,
             groups: this.state.groups
         });
+        
     }
 
     generateGroups = async () => {
-        this.setState({
-            courses: ["Physics 2212", "Math 2552", "CS 1331"],
-            groupDisplay: false,
-            currGroup: null,
-            groups: [{
-                id: 11,
-                courseName: "Physics 2212",
-                memberIds: [35243, 2452345, 242345]
-            },
-            {
-                id: 12,
-                courseName: "Math 2552",
-                memberIds: [1241, 12341325, 436346]
-            },
-            {
-                id: 13,
-                courseName: "CS 1331",
-                memberIds: [43254, 365356, 43736346]
-        }]})
+        if (this.state.courses !== null) {
+            console.log(this.state.courses)
+            let token = localStorage.getItem("auth-token");
+            let groups = []
+            for (let i = 0; i<this.state.courses.length; i++) {
+                console.log(`Generating group for ${this.state.courses[i].name}`)
+                await axios.post('/api/groups/generate', {courseName: this.state.courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
+                   if (res.data.msg === null) {
+                      groups.push(res.data)
+                    }
+                    console.log(`Results for ${this.state.courses[i].name}: ${res.data}`)
+                })
+             
+            }
+            
+            this.setState({
+                courses: this.state.courses,
+                groupDisplay: false,
+                currGroup: null,
+                groups,
+            })
+        }
+        
+        
     }
+
+    
 
 }
 const btnStyle= {
