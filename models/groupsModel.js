@@ -8,7 +8,7 @@ const groupsSchema = new Schema ({
     }, 
     members: [{
         id: {
-            type: String,
+            type: String
         }
     }]
 })
