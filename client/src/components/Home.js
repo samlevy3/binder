@@ -34,7 +34,10 @@ class Home extends Component {
         
         if (this.state.groups.length > 0) {
             return (
-                <div>
+                <div style={{display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0',}}>
                     <div style={courseBoxStyle}>
                         <h1 style={{textAlign:"center"}}>Groups</h1>
                         <Courses 
