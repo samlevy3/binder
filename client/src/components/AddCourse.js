@@ -10,7 +10,6 @@ class AddCourse extends React.Component {
         e.preventDefault();
         if (this.validCourse()) {
             this.props.addCourse(this.state.title);
-            console.log(this.state.title);
             this.setState({ title: ''});
         }
     }

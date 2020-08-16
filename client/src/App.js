@@ -30,7 +30,6 @@ class App extends React.Component {
     }
 
     login = async (email, password) => {
-      console.log("Loggin in")
       if (!email || !password) {
         return alert("Please Enter All Fields");
       }
@@ -68,9 +67,14 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-        <Route exact path="/login" render={props => (
+        <Route exact path="/register" render={props => (
          <React.Fragment>
            <NewUser register={this.register}/>
+          </React.Fragment>
+        )}/>
+        <Route path="/login" render={props => (
+         <React.Fragment>
+           <Login login={this.login}/>
           </React.Fragment>
         )}/>
         </div>
