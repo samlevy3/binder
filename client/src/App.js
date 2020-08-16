@@ -58,9 +58,15 @@ class App extends React.Component {
 
       <Router>
         <div>
-        <Route render={props => (
+        <Route path = '/login' render={props => (
          <React.Fragment>
            <Welcome />
+          </React.Fragment>
+        )}/>
+
+        <Route path = '/home' render={props => (
+         <React.Fragment>
+           <Home />
           </React.Fragment>
         )}/>
         </div>

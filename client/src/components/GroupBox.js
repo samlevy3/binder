@@ -17,7 +17,7 @@ class GroupBox extends Component {
                 i += 1
             });
             return (
-                <div>
+                <div style={groupBoxStyle}>
                     <h4>{`Group for ${this.props.group.courseName}`}</h4> 
                     <FriendList members={memberNames}/>
                 </div>
@@ -34,4 +34,14 @@ class GroupBox extends Component {
 }
 
 const names = ["Bob", "Joe", "Fred", "Sam"]
+
+const groupBoxStyle = {
+    float:"left", 
+    margin: '20px', 
+    border: 'solid #000 1px', 
+    padding: '10px ',
+    width: "40%"
+}
+
+
 export default GroupBox;
