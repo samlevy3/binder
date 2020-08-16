@@ -84,11 +84,13 @@ class App extends React.Component {
            <Login login={this.login}/>
           </React.Fragment>
         )}/>
+        {this.state.userData.user ? 
         <Route path = '/home' render={props => (
          <React.Fragment>
-           {this.state.userData.user ? <Home user={this.state.userData.user}/>: null}
+           <Home user={this.state.userData.user}/>
           </React.Fragment>
         )}/>
+        : <Route path='/home' component={Welcome}/>}
         </div>
       </Router>
     );
