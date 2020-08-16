@@ -3,21 +3,21 @@ const router = express.Router();
 const auth = require ('../../middleware/auth');
 const userModel = require('../../models/userModel');
 const groupsModel = require('../../models/groupsModel');
-const { log } = require('console');
 
-router.route('/generate').post( auth, async (req, res) => {
-    const id = req.user
-    const user = await userModel.find({_id: id})
-    const courseName= req.body.courseName;
-    const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
-    console.log(`Original: ${members}`)
-    console.log(`User: ${user}`)
-    if (members.some(member => member._id === user._id)) { 
+
+
+router.route('/generate').post(auth, async (req, res) => {
+    try {
+      const id = req.user
+      const user = await userModel.findById(id);
+      const courseName= req.body.courseName;
+      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
+    
+      if (members.some(member => member._id === user._id)) { 
         members.push(user)
-    }
-    console.log(`Following request: ${members}`)
-    console.log(members.length)
-    if (members.length > 1) {
+      }
+   
+      if (members.length > 1) {
         
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
@@ -38,9 +38,10 @@ router.route('/generate').post( auth, async (req, res) => {
     } else {
         res.json({msg: "Oops, doesn't look like you have any friends"})
     }
-    
+  } catch (err) {
+        res.json({err: err.message});
 
-   
+    }
 });
 
 router.route('/forUser').get( auth, async (req, res) => {
@@ -64,20 +65,22 @@ router.route('/all').get(async (req, res) => {
     
 })
 
-async function updateGroupStatusForMember(member, courseName) {let updatedClasses = member.classes;
+async function updateGroupStatusForMember(member, courseName) {
+    let updatedClasses = member.classes;
     updatedClasses.forEach(course => {
         if (course.name === courseName) {
             course.inGroup = true;
         }
     })
     await userModel.updateOne(
-        {_id: member._id}, 
+        {_id: member._id, classes: courseName}, 
         {
             $set: {
-                classes: updatedClasses
+                inGroup: false
             }
             
         })
     
 }
+
 module.exports = router;

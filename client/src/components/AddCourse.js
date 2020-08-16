@@ -14,7 +14,7 @@ class AddCourse extends React.Component {
         }
     }
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+    onChange = (e) => this.setState({ [e.target.name]: e.target.value.toUpperCase() });
 
 
     validCourse = () => {
@@ -30,7 +30,7 @@ class AddCourse extends React.Component {
         <input 
               type="text" 
             name="title"
-            style={{flex: '10', padding: '5px', fontSize: '10px'}}
+            style={{flex: '10', padding: '5px', fontSize: '12px', width: '80px'}}
             placeholder="New Course ..."
             value={this.state.title}
             onChange={this.onChange}
@@ -40,7 +40,7 @@ class AddCourse extends React.Component {
             onClick={this.onClick}
             value="Add Course"
             className="btn"
-            style={{ fontSize: '10px'}}
+            style={{ fontSize: '12px'}}
         />
     </div>
     )

@@ -7,7 +7,6 @@ import Header from './components/layouts/Header';
 
 import Home from './components/Home'
 import {  Router, Route } from 'react-router-dom';
-import Welcome from './components/Welcome';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -42,6 +41,13 @@ class App extends React.Component {
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push('/home');
   }
+
+  logout = () => {
+    localStorage.setItem("auth-token", "");
+    this.setState({token: undefined, user: undefined});
+    history.push('/');
+    window.location.reload(false);
+  }
     
   checkIfLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
@@ -71,17 +77,14 @@ class App extends React.Component {
     
     return (
       <Router history={history}>
-        <Header />
+        <Header logout={this.logout} loggedIn={this.state.userData}/>
         <div>
-
-        <Route exact path='/' component={Welcome}/>
-
         <Route exact path="/register" render={props => (
          <React.Fragment>
            <NewUser register={this.register}/>
           </React.Fragment>
         )}/>
-      <Route exact path="/login" render={props => (
+      <Route exact path="/" render={props => (
          <React.Fragment>
            <Login login={this.login}/>
           </React.Fragment>
@@ -90,11 +93,11 @@ class App extends React.Component {
         <Route path = '/home' render={props => (
          <React.Fragment>
 
-           <Home user={this.state.userData.user ? this.state.userData.user : null}/>
+           <Home user={this.state.userData.user}/>
 
           </React.Fragment>
         )}/>
-        : <Route path='/home' component={Welcome}/>}
+        : <Route path='/home' component={Login}/>}
         </div>
       </Router>
     );
