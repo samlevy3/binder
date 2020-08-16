@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Courses from './Courses'
 import GroupBox from './GroupBox'
+import axios from 'axios'
 
 class Home extends Component {
 
@@ -9,6 +10,16 @@ class Home extends Component {
         groupDisplay: false,
         currGroup: null,
         groups: []   
+    }
+
+    componentDidMount() {
+        axios.get('/groups').then(res => this.setState({
+            courses: ["Physics 2212", "Math 2552", "CS 1331"],
+            groupDisplay: false,
+            currGroup: null,
+            groups: res.data
+        }))
+        console.log(this.state.groups)
     }
 
     userHasGroups() {
@@ -21,8 +32,8 @@ class Home extends Component {
                 <div>
                     
                     
-                    <div style={{float:"left", margin: '20px', borderStyle: 'solid'}}>
-                        <h1>Groups</h1>
+                    <div style={courseBoxStyle}>
+                        <h1 style={{textAlign:"center"}}>Groups</h1>
                         <Courses 
                             courses={this.state.courses} 
                             courseClicked={this.courseClicked}
@@ -68,7 +79,7 @@ class Home extends Component {
         });
     }
 
-    generateGroups = () => {
+    generateGroups = async () => {
         this.setState({
             courses: ["Physics 2212", "Math 2552", "CS 1331"],
             groupDisplay: false,
@@ -110,6 +121,14 @@ const centered = {
     left: "50%",
     msTransform: "translateX(-50%)",
     transform: "translateX(-50%)"
+}
+
+const courseBoxStyle = {
+    float:"left", 
+    margin: '20px', 
+    border: 'solid #000 1px', 
+    padding: '10px ',
+    width: "40%"
 }
 
 export default Home;
