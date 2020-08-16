@@ -73,33 +73,36 @@ class Home extends Component {
         })
         this.setState({ 
             groupDisplay: groupSelected ? true : false,
-            currGroup: groupSelected,
+            currGroup: groupSelected
+
         });
         
     }
 
     generateGroups = async () => {
-        console.log(this.state.courses)
-        if (this.state.courses) {
-            console.log(this.state.courses)
+
+        const courses = this.props.user.classes
+        if (courses) {
             let token = localStorage.getItem("auth-token");
             let groups = []
             for (let i = 0; i<courses.length; i++) {
-                console.log(`Generating group for ${this.state.courses[i].name}`)
-                await axios.post('/api/groups/generate', {courseName: this.state.courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
+                console.log(`Generating group for ${courses[i].name}`)
+                await axios.post('/api/groups/generate', {courseName: courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
                    if (res.data.msg === null) {
                       groups.push(res.data)
                     }
-                    console.log(`Results for ${courses[i].name}: ${res.data}`)
+                    console.log(res.data)
                 })
              
             }
             
             this.setState({
                 courses,
-                groups,
+                groups
+
             })
         }
+        this.checkGroups()
         
         
     }

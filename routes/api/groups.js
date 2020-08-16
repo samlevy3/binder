@@ -11,30 +11,26 @@ router.route('/generate').post(auth, async (req, res) => {
       const id = req.user
       const user = await userModel.findById(id);
       const courseName= req.body.courseName;
-      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
-    
-      if (members.some(member => member._id === user._id)) { 
-        members.push(user)
-      }
-   
-      if (members.length > 1) {
+      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)      
         
+      if (members.length > 1) {
+        console.log("Members:" + members.toString())
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
         }
-    
+        console.log("Line 25")
         let memberIds = []
-        members.forEach(member => memberIds.push({id: member.id}))
+        members.forEach(member => memberIds.push({id: member._id, name: member.name, phone: member.phone, email: member.email}))
+        console.log("Line 28")
+        console.log(memberIds);
         const newGroup = new groupsModel({
             course: courseName, 
             members: memberIds
         });
-        const savedGroup = await newGroup.save();
+        console.log(newGroup)
+        await newGroup.save();
 
-        res.json({
-            courseName,
-            members
-        });
+        res.json(newGroup);
     } else {
         res.json({msg: "Oops, doesn't look like you have any friends"})
     }
@@ -46,7 +42,7 @@ router.route('/generate').post(auth, async (req, res) => {
 
 router.route('/forUser').get( auth, async (req, res) => {
     try {
-     
+        console.log(req.user)
         const groups = await groupsModel.find({ members: {$elemMatch: {id: req.user}}})
         res.json(groups)
     } catch (err) {
@@ -73,14 +69,13 @@ async function updateGroupStatusForMember(member, courseName) {
         }
     })
     await userModel.updateOne(
-        {_id: member._id, classes: courseName}, 
+        {_id: member._id}, 
         {
             $set: {
-                inGroup: false
+                classes: updatedClasses
             }
             
         })
-    
 }
 
 module.exports = router;
