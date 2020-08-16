@@ -31,7 +31,7 @@ router.route('/login')
 router.route('/register')
     .post(async (req, res) => {
         try {
-            const { name, email, password, phone, courses } = req.body;
+            const { name, email, password, phone, classes } = req.body;
             const isUser = await userModel.findOne({email: email});
             if (isUser) {
                 return res.status(401).json({msg: "User already exists"});
@@ -43,7 +43,7 @@ router.route('/register')
                 email,
                 password: passHash,
                 phone,
-                classes: courses
+                classes
             });
             const savedUser = await newUser.save();
             return res.json(savedUser);
