@@ -11,7 +11,7 @@ class GroupBox extends Component {
             
             return (
                 <div style={groupBoxStyle}>
-                    <h4 >{`Group Members for ${group.course}`}</h4> 
+                    <h4 style={{color: '#4b2e83'}}>{`Group Members for ${group.course}`}</h4> 
                     <FriendList members={group.members.filter(member => member.name !== this.props.userName)}/>
                 </div>
                 
