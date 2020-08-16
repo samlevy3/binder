@@ -26,6 +26,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.user.classes);
         this.checkGroups();
     }
 
@@ -79,8 +80,13 @@ class Home extends Component {
     }
 
     generateGroups = async () => {
+<<<<<<< HEAD
         const courses = this.props.user.classes;
         if (this.state.courses !== null) {
+=======
+        console.log(this.state.courses)
+        if (this.state.courses) {
+>>>>>>> df5c53677100d342f16eedc216ae5580abf23cf5
             console.log(this.state.courses)
             let token = localStorage.getItem("auth-token");
             let groups = []
