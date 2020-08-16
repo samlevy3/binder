@@ -19,7 +19,6 @@ class Home extends Component {
             currGroup: null,
             groups: res.data
         }))
-        console.log(this.state.groups)
     }
 
     userHasGroups() {
@@ -66,7 +65,6 @@ class Home extends Component {
         let groupSelected = null;
         this.state.groups.forEach(group => {
             if (group.courseName === name) {
-                console.log(name)
                 groupSelected = group;
             
             }
