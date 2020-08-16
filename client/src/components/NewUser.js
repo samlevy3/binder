@@ -16,7 +16,7 @@ class NewUser extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const { name, email, phone, password, confirm_password, courses} = this.state;
-        if (!name || !email || !phone || !password || !confirm_password || !courses) {
+        if (!name || !email || !phone || !password || !confirm_password || courses.length === 0) {
             alert("Please enter all fields.")
         }
         else if (password !== confirm_password) {
@@ -51,8 +51,10 @@ class NewUser extends React.Component {
 
   render() {
     return (
-    <div>
-         New User! Sign up now!
+    <div style={{textAlign: 'center', padding: '10px'}}>
+        <h2>
+        Create New Account
+        </h2> 
       <div style={{padding: '10px'}}>
         <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float:'left'}}>
                 <input 
@@ -103,9 +105,21 @@ class NewUser extends React.Component {
 				/>
 			</form>
       </div>
-      <div style={{float: 'right', width: '45%', height: '55%'}}>
-                <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
-                <AddCourse addCourse={this.addCourse}/>
+      <div style={{
+                float: 'right', 
+                width: '35%', 
+                height: '55%', 
+                border: '1px solid black', 
+                padding: '10px',
+                borderRadius: '4px',
+                backgroundColor: '#ccc',
+                margin: '0% 10% 2% 2%',
+
+        }}> <p>
+                {this.state.courses.length === 0 ? 'No courses added' : undefined}
+            </p>
+            <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
+            <AddCourse addCourse={this.addCourse}/>
     </div>
     </div>
       

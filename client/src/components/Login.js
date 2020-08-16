@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
 
@@ -20,36 +21,65 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div style={{padding: '10px'}}>
-       Login
-        <form onSubmit={this.onSubmit} style={{display: 'flex'}}>
-                <input 
+      <div style={{
+        display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: '0',
+      }}>
+      <div style={{
+        padding: '10px', 
+        border: '1px solid #ccc', 
+        borderRadius: '4px', 
+        textAlign: 'center', 
+        margin: '50px',
+        width: '300px'
+        }}>
+       <h4 style={{margin: '7px'}}>
+         Login
+       </h4>
+        <form onSubmit={this.onSubmit} style={{display: 'block', width: '100%', textAlign:'center'}}>
+          <input 
 			  		type="email" 
-					name="email"
-					style={{flex: '10', padding: '5px'}}
-					placeholder="Email"
-					value={this.state.email}
-					onChange={this.onChange}
-				/>
+					  name="email"
+					  style={formStyle}
+				    placeholder="Email"
+				    value={this.state.email}
+				    onChange={this.onChange}
+			  	/>
             
-                <input 
-			  		type="password" 
-					name="password"
-					style={{flex: '10', padding: '5px'}}
-					placeholder="Password"
-					value={this.state.password}
-					onChange={this.onChange}
-				/>
-				<input 
-					type="submit"
-					value="Submit"
-					className="btn"
-					style={{flex: '1'}}
-				/>
-			</form>
+          <input 
+		  		  type="password" 
+					  name="password"
+				    style={formStyle}
+				    placeholder="Password"
+				    value={this.state.password}
+				    onChange={this.onChange}
+				  />
+
+				  <input 
+					  type="submit"
+					  value="Login"
+					  className="btn"
+					  style={{flex: '1'}}
+				  />
+			  </form>
+        <p style={{margin: '5px'}}><Link style={{padding: '5px', fontSize: '10px'}} to="/register">Don't have an account? Register now.</Link></p>
+      </div>
       </div>
     )
   }
+  
+}
+
+const formStyle = {
+  width: '100%',
+  padding: '12px 20px',
+  margin: '8px 0',
+  display: 'inline-block',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  boxSizing: 'border-box'
 }
 
 export default Login;
