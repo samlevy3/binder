@@ -12,8 +12,8 @@ class CourseList extends React.Component {
             )
         } else {
             return (
-                this.props.courses.map((course) => (
-                    <CourseItem key={course.name} courseName={course.name} deleteCourse={this.props.deleteCourse}/>
+                this.props.courses.map((course, index) => (
+                    <CourseItem key={index} courseName={course.name} deleteCourse={this.props.deleteCourse}/>
                 ))
             )
         }

@@ -42,6 +42,12 @@ class App extends React.Component {
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push('/home');
   }
+
+  logout = () => {
+    localStorage.setItem("auth-token", "");
+    this.setState({token: undefined, user: undefined});
+    history.push('/');
+  }
     
   checkIfLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
@@ -71,7 +77,7 @@ class App extends React.Component {
     
     return (
       <Router history={history}>
-        <Header />
+        <Header logout={this.logout} loggedIn={this.state.userData}/>
         <div>
 
         <Route exact path='/' component={Welcome}/>
