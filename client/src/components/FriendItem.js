@@ -7,9 +7,8 @@ class FriendItem extends Component {
                 <p style={style}>
                     Name: {this.props.member.name}<br></br>
                     Email: {this.props.member.email}<br></br>
-                    Phone: {this.props.member.phone}
+                    Phone Number: {this.props.member.phone}
                 </p>
-               
             </div>
         );
     }

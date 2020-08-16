@@ -14,20 +14,16 @@ router.route('/generate').post(auth, async (req, res) => {
       const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)      
         
       if (members.length > 1) {
-        console.log("Members:" + members.toString())
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
         }
-        console.log("Line 25")
         let memberIds = []
         members.forEach(member => memberIds.push({id: member._id, name: member.name, phone: member.phone, email: member.email}))
-        console.log("Line 28")
-        console.log(memberIds);
         const newGroup = new groupsModel({
             course: courseName, 
             members: memberIds
         });
-        console.log(newGroup)
+
         await newGroup.save();
 
         res.json(newGroup);
