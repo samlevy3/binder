@@ -73,14 +73,14 @@ class Home extends Component {
         })
         this.setState({ 
             groupDisplay: groupSelected ? true : false,
-
-            currGroup: groupSelected,
+            currGroup: groupSelected
 
         });
         
     }
 
     generateGroups = async () => {
+
         const courses = this.props.user.classes
         if (courses) {
             let token = localStorage.getItem("auth-token");
@@ -88,7 +88,6 @@ class Home extends Component {
             for (let i = 0; i<courses.length; i++) {
                 console.log(`Generating group for ${courses[i].name}`)
                 await axios.post('/api/groups/generate', {courseName: courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
-
                    if (res.data.msg === null) {
                       groups.push(res.data)
                     }
@@ -100,6 +99,7 @@ class Home extends Component {
             this.setState({
                 courses,
                 groups
+
             })
         }
         this.checkGroups()
@@ -108,7 +108,6 @@ class Home extends Component {
     }
 
     
-
 }
 const btnStyle= {
     position: "absolute",
