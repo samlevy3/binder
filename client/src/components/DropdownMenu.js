@@ -45,7 +45,8 @@ const btnStyle = {
 	fontSize: '0.4em',
 	float: 'right',
 	position: 'absolute',
-	right: '10px',
+    right: '10px',
+    top: '10px',
 	borderRadius: '4px',
 	border: '1px solid white'
 }
@@ -56,7 +57,7 @@ const menuStyle = {
 	float: 'right',
 	position: 'absolute',
     right: '10px',
-    top: '20px',
+    top: '30px',
     width: '90px'
 }
 
