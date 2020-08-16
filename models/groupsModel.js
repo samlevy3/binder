@@ -23,7 +23,6 @@ const groupsSchema = new Schema ({
             type: String,
             required: true
         }
-
     }]
 })
 

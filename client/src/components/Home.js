@@ -101,9 +101,9 @@ class Home extends Component {
                 groups
 
             })
+            this.checkGroups();
         }
         this.checkGroups()
-        
         
     }
 
