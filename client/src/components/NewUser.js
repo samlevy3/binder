@@ -38,7 +38,6 @@ class NewUser extends React.Component {
         let courseObject = {
             name: course,
             inGroup: false,
-            _id: this.state.email
         }
         let courses = this.state.courses;
         courses.push(courseObject);

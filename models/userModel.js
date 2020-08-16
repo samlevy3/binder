@@ -19,7 +19,14 @@ const userSchema = new Schema ({
         required: true
     },
     classes: [{ 
-        type: String
+        name: {
+            type: String,
+            required: true
+        },
+        inGroup: {
+            type: Boolean,
+            required: true
+        },
     }]
 })
 

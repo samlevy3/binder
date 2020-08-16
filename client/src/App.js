@@ -16,9 +16,9 @@ class App extends React.Component {
       token: undefined,
       user: undefined
       }
-    }
+  }
 
-    register = async(name, email, password, phone, courses) => {
+  register = async(name, email, password, phone, courses) => {
       await axios.post('api/users/register', {
         name, 
         email,
@@ -27,9 +27,9 @@ class App extends React.Component {
         courses
       })
       this.login(email, password);
-    }
+  }
 
-    login = async (email, password) => {
+  login = async (email, password) => {
       if (!email || !password) {
         return alert("Please Enter All Fields");
       }
@@ -40,9 +40,15 @@ class App extends React.Component {
       }});
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push('/home');
-    }
+  }
+
+  logout = () => {
+    localStorage.setItem("auth-token", "");
+    this.setState({token: undefined, user: undefined});
+    history.push('/');
+  }
     
-    checkIfLoggedIn = async () => {
+  checkIfLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
         if (token === null) {
           localStorage.setItem("auth-token", "");
@@ -55,20 +61,22 @@ class App extends React.Component {
           });
           this.setState({userData: {
             token,
-      user: userRes.data,
+            user: userRes.data,
           }});
           history.push('/home');
         }
-    }
+  }
 
   componentDidMount() {
     this.checkIfLoggedIn();
+    
   }
   
   render() {
+    
     return (
       <Router history={history}>
-        <Header />
+        <Header logout={this.logout} loggedIn={this.state.userData}/>
         <div>
         <Route exact path="/register" render={props => (
          <React.Fragment>
@@ -80,11 +88,15 @@ class App extends React.Component {
            <Login login={this.login}/>
           </React.Fragment>
         )}/>
+        {this.state.userData.user ? 
         <Route path = '/home' render={props => (
          <React.Fragment>
-           {this.state.userData.user ? <Home user={this.state.userData.user}/>: null}
+
+           <Home user={this.state.userData.user ? this.state.userData.user : null}/>
+
           </React.Fragment>
         )}/>
+        : <Route path='/home' component={Welcome}/>}
         </div>
       </Router>
     );

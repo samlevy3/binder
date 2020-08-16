@@ -1,5 +1,4 @@
 const express = require('express');
-const { builtinModules } = require('module');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const userModel = require('../../models/userModel');
@@ -24,6 +23,7 @@ router.route('/login')
                 id: isUser._id,
                 name: isUser.name,
                 email: isUser.email,
+                classes: isUser.classes
             }
         });
     });
@@ -88,6 +88,16 @@ router.route('/addClass')
         } catch (err) {
             return res.json({err: err.message});
         }
+    })
+
+    router.route('/all').get(async (req, res) => {
+        const users = await userModel.find()
+        if (users){
+            res.json(users)
+        } else {
+            res.json({msg: "Error"})
+        }
+        
     })
 
 router.route('/getUser')
