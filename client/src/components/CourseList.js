@@ -7,7 +7,7 @@ class CourseList extends React.Component {
         if (this.props.courses.length === 0){
             return (
                 <div>
-                    No courses 
+                    No courses added
                 </div>
             )
         } else {

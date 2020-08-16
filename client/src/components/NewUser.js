@@ -9,21 +9,27 @@ class NewUser extends React.Component {
         email: '',
         phone: '',
         password: '',
+        confirm_password: '',
         courses: []
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { name, email, phone, password, courses} = this.state;
-        if (!name || !email || !phone || !password || !courses) {
-            alert("Please enter all fields")
+        const { name, email, phone, password, confirm_password, courses} = this.state;
+        if (!name || !email || !phone || !password || !confirm_password || !courses) {
+            alert("Please enter all fields.")
         }
-        this.props.register(name, email, password, phone, courses);
-        this.setState({ name: '',
-        email: '',
-        phone: '',
-        password: '',
-        courses: []});
+        else if (password !== confirm_password) {
+            alert("Passwords do not match.")
+        } else {
+            this.props.register(name, email, password, phone, courses);
+            this.setState({ name: '',
+            email: '',
+            phone: '',
+            password: '',
+            confirm_password: '',
+            courses: []});
+        }
     }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -81,6 +87,16 @@ class NewUser extends React.Component {
 					style={{flex: '10', padding: '5px'}}
 					placeholder="Password"
 					value={this.state.password}
+					onChange={this.onChange}
+				/>
+                </li>
+                <li>
+                <input 
+			  		type="password" 
+					name="confirm_password"
+					style={{flex: '10', padding: '5px'}}
+					placeholder="Confirm Password"
+					value={this.state.confirm_password}
 					onChange={this.onChange}
 				/>
                 </li>

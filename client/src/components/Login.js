@@ -10,9 +10,7 @@ class Login extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const {email, password} = this.state;
-        console.log(this.state)
         if (email !== '' && password !== '') {
-            console.log("step 2")
             this.props.login(email, password);
         }
     }

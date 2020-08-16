@@ -69,7 +69,9 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <div>
+
         <Route exact path='/' component={Welcome}/>
+
         <Route exact path="/register" render={props => (
          <React.Fragment>
            <NewUser register={this.register}/>
@@ -79,12 +81,9 @@ class App extends React.Component {
          <React.Fragment>
            <Login login={this.login}/>
           </React.Fragment>
-<<<<<<< HEAD
         )}/>
-        <Route exact path="/home" render={props => (
-=======
+
         <Route path = '/home' render={props => (
->>>>>>> c13af3ef74c4f1e0a3f8f2559cafc04efdd6ccc4
          <React.Fragment>
            <Home />
           </React.Fragment>
