@@ -107,7 +107,7 @@ router.route('/getUser')
             const result = {
                 name: user.name,
                 email: user.email,
-                class: user.classes
+                classes: user.classes
             }
             return res.json(result);
         } catch (err) {
