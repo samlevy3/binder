@@ -73,10 +73,8 @@ class Home extends Component {
             }
         })
         this.setState({ 
-            courses: this.state.courses, 
             groupDisplay: groupSelected ? true : false,
-            currGroup: groupSelected,
-            groups: this.state.groups
+            currGroup: groupSelected
         });
         
     }
@@ -87,7 +85,7 @@ class Home extends Component {
             console.log(this.state.courses)
             let token = localStorage.getItem("auth-token");
             let groups = []
-            for (let i = 0; i<this.state.courses.length; i++) {
+            for (let i = 0; i<courses.length; i++) {
                 console.log(`Generating group for ${this.state.courses[i].name}`)
                 await axios.post('/api/groups/generate', {courseName: this.state.courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
                    if (res.data.msg === null) {
@@ -99,7 +97,6 @@ class Home extends Component {
             }
             
             this.setState({
-                courses: this.state.courses,
                 groupDisplay: false,
                 currGroup: null,
                 groups,
