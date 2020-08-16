@@ -80,8 +80,9 @@ class Home extends Component {
 
     generateGroups = async () => {
         console.log(this.state.courses)
-        if (this.state.courses) {
-            console.log(this.state.courses)
+        const courses = this.state.courses;
+        if (courses) {
+            console.log(courses)
             let token = localStorage.getItem("auth-token");
             let groups = []
             for (let i = 0; i<courses.length; i++) {
@@ -91,6 +92,7 @@ class Home extends Component {
                       groups.push(res.data)
                     }
                     console.log(`Results for ${courses[i].name}: ${res.data}`)
+                    console.log(res.data)
                 })
              
             }

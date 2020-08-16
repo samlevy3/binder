@@ -12,11 +12,13 @@ router.route('/generate').post(auth, async (req, res) => {
       const user = await userModel.findById(id);
       const courseName= req.body.courseName;
       const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
-    
-      if (members.some(member => member._id === user._id)) { 
+
+      if (members.some(member => member._id !== user._id)) { 
         members.push(user)
       }
    
+      console.log(members)
+
       if (members.length > 1) {
         
         for (let index = 0; index < members.length; index++) {
@@ -46,7 +48,6 @@ router.route('/generate').post(auth, async (req, res) => {
 
 router.route('/forUser').get( auth, async (req, res) => {
     try {
-     
         const groups = await groupsModel.find({ members: {$elemMatch: {id: req.user}}})
         res.json(groups)
     } catch (err) {
@@ -65,6 +66,16 @@ router.route('/all').get(async (req, res) => {
     
 })
 
+router.route('/:course').get(async (req, res) => {
+    const groups = await groupsModel.find({course: req.params.course})
+    if (groups){
+        res.json(groups)
+    } else {
+        res.json({msg: "Error"})
+    }
+    
+})
+
 async function updateGroupStatusForMember(member, courseName) {
     let updatedClasses = member.classes;
     updatedClasses.forEach(course => {
@@ -73,10 +84,10 @@ async function updateGroupStatusForMember(member, courseName) {
         }
     })
     await userModel.updateOne(
-        {_id: member._id, classes: courseName}, 
+        {_id: member._id}, 
         {
             $set: {
-                inGroup: false
+                classes: updatedClasses
             }
             
         })
