@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require ('../../middleware/auth');
 const userModel = require('../../models/userModel');
-const groupsModel = require('../../models/groupsModel')
+const groupsModel = require('../../models/groupsModel');
 
 router.route('/generate').post( async (req, res) => {
     const courseName= req.body.courseName;
@@ -62,4 +62,5 @@ async function updateGroupStatusForMember(member, courseName) {let updatedClasse
         })
     
 }
+
 module.exports = router;

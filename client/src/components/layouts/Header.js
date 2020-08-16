@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
 
 class Header extends React.Component {
 	state = {
@@ -8,7 +6,7 @@ class Header extends React.Component {
 	}
 	onClick =(e) => {
 		this.setState({
-			loggedIn: !this.state.loggedIn
+			loggedIn: false
 		})
 		this.props.logout();
 	}
@@ -16,8 +14,14 @@ class Header extends React.Component {
 	render() {
 		return (
 			<header style={headerStyle}>
-				<h1>binder</h1>
+				<div style={{
+					display: 'flex',
+					justifyContent: 'center',
+					position: 'relative'
+				}}>
+				<h1 style={{margin: '20px', textAlign: 'center'}}>binder</h1>
 				{this.props.loggedIn.user ? <button style={btnStyle} onClick={this.onClick}>Logout</button>: null}
+				</div>
 			</header>
 		);
 	}
@@ -26,20 +30,22 @@ class Header extends React.Component {
 
 const btnStyle = {
 	border: 'none',
-	backgroundColor: '#404040',
+	backgroundColor: '#ccc',
 	padding: 'none',
-	color: 'white',
-	fontSize: '1em',
-	display: 'flex',
+	color: 'black',
+	fontSize: '0.5em',
+	float: 'right',
+	position: 'absolute',
+	right: '0',
+	borderRadius: '4px'
 
 }
 
 const headerStyle = {
-	background: '#333',
+	background: '#4b2e83',
 	color: '#fff',
-	textAlign: 'center',
-	padding: '1px',
-	fontSize: '30px'
+	padding: '10px',
+	fontSize: '2em',
 }
 
 export default Header
