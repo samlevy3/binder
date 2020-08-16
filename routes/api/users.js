@@ -18,8 +18,6 @@ router.route('/login')
             return res.status(401).json({msg: "Wrong password"});
         }
         const token = await jwt.sign({id: isUser._id}, process.env.JWT_SECRET);
-        console.log(token);
-        console.log(isUser);
         return res.json({
             token,
             user: {
@@ -34,7 +32,6 @@ router.route('/register')
     .post(async (req, res) => {
         try {
             const { name, email, password, phone, courses } = req.body;
-            console.log(courses);
             const isUser = await userModel.findOne({email: email});
             if (isUser) {
                 return res.status(401).json({msg: "User already exists"});
@@ -48,7 +45,6 @@ router.route('/register')
                 phone,
                 classes: courses
             });
-            console.log(newUser);
             const savedUser = await newUser.save();
             return res.json(savedUser);
         } catch (err) {
@@ -82,12 +78,10 @@ router.route('/addClass')
     .post(auth, async (req, res) => {
         try {
             const id = req.user;
-            console.log(id);
             const course = {
                 name: req.body.course,
                 _id: id
             }
-            console.log(course);
             const response = await userModel.updateOne({_id: req.user}, {$addToSet: {classes: course}});
 
             return res.json(response.nModified);
