@@ -27,10 +27,6 @@ const userSchema = new Schema ({
             type: Boolean,
             required: true
         },
-        _id: {
-            type: String,
-            required: true
-        }
     }]
 })
 
