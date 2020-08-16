@@ -45,10 +45,9 @@ class GroupBox extends Component {
 const names = ["Bob", "Joe", "Fred", "Sam"]
 
 const groupBoxStyle = {
-    float:"none", 
     margin: '20px', 
-    border: 'solid #363C74 2px', 
-    padding: '10px ',
+    border: 'solid #4b2e83 2px', 
+    padding: '10px 15px',
     width: "100%",
     borderRadius: '10px'
 }

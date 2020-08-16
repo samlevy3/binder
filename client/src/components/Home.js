@@ -131,8 +131,10 @@ const centered = {
 const courseBoxStyle = {
     float:"left", 
     margin: '20px', 
-    border: 'solid #000 1px', 
+    border: 'solid #4b2e83 2px', 
+    color: "#4b2e83",
     padding: '10px ',
+    borderRadius: "10px",
     width: "40%"
 }
 
