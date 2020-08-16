@@ -3,6 +3,7 @@ const path = require('path');
 const userRouter = require('./routes/api/users');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const groupsRouter = require('./routes/api/groups')
 const app = express();
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -27,6 +28,7 @@ mongoose.connection.on('error', err => {
 });
 
 app.use('/api/users', userRouter);
+app.use('/api/groups', groupsRouter)
 
 if (process.env.NODE_ENV === 'production') {
   // Set static folder

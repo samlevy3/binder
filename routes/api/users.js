@@ -90,6 +90,16 @@ router.route('/addClass')
         }
     })
 
+    router.route('/all').get(async (req, res) => {
+        const users = await userModel.find()
+        if (users){
+            res.json(users)
+        } else {
+            res.json({msg: "Error"})
+        }
+        
+    })
+
 router.route('/getUser')
     .post(auth, async(req, res) => {
         try {
