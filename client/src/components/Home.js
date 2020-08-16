@@ -55,7 +55,6 @@ class Home extends Component {
         let groupSelected = null;
         this.state.groups.forEach(group => {
             if (group.courseName === name) {
-                console.log(name)
                 groupSelected = group;
             
             }

@@ -2,10 +2,10 @@ import React from 'react';
 import './App.css';
 import NewUser from './components/NewUser';
 import Login from './components/Login';
-
+import history from './history';
 
 import Home from './components/Home'
-import {   BrowserRouter as Router, Route } from 'react-router-dom';
+import {  Router, Route } from 'react-router-dom';
 import Welcome from './components/Welcome';
 import axios from 'axios';
 
@@ -30,7 +30,6 @@ class App extends React.Component {
     }
 
     login = async (email, password) => {
-      console.log("Loggin in")
       if (!email || !password) {
         return alert("Please Enter All Fields");
       }
@@ -40,6 +39,7 @@ class App extends React.Component {
         token: loginRes.data.token, user: loginRes.data.user
       }});
       localStorage.setItem("auth-token", loginRes.data.token);
+      history.push('/home');
     }
     
     checkIfLoggedIn = async () => {
@@ -48,7 +48,7 @@ class App extends React.Component {
           localStorage.setItem("auth-token", "");
           token ="";
         }
-        const tokenRes = await axios.post('/api/users/isValidToken',
+        const tokenRes = await axios.post('/api/users/isValidToken', null,
         {headers: { 'x-auth-token': token}});
         if (tokenRes.data) {
           const userRes = await axios.post('/api/users/getUser', null, {headers: { 'x-auth-token': token}
@@ -57,6 +57,7 @@ class App extends React.Component {
             token,
       user: userRes.data,
           }});
+          history.push('/home');
         }
     }
 
@@ -66,7 +67,7 @@ class App extends React.Component {
   
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
         <Route exact path='/' component={Welcome}/>
         <Route exact path="/register" render={props => (
@@ -76,7 +77,12 @@ class App extends React.Component {
         )}/>
         <Route exact path="/login" render={props => (
          <React.Fragment>
-           <Login register={this.login}/>
+           <Login login={this.login}/>
+          </React.Fragment>
+        )}/>
+        <Route exact path="/home" render={props => (
+         <React.Fragment>
+           <Home />
           </React.Fragment>
         )}/>
         </div>
