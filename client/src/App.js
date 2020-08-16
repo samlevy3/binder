@@ -74,9 +74,13 @@ class App extends React.Component {
            <NewUser register={this.register}/>
           </React.Fragment>
         )}/>
-        <Route exact path="/login" render={props => (
+      <Route exact path="/login" render={props => (
          <React.Fragment>
-           <Login register={this.login}/>
+           <Login login={this.login}/>
+          </React.Fragment>
+        <Route path = '/home' render={props => (
+         <React.Fragment>
+           <Home />
           </React.Fragment>
         )}/>
         </div>
