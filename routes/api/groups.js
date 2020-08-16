@@ -4,50 +4,56 @@ const auth = require ('../../middleware/auth');
 const userModel = require('../../models/userModel');
 const groupsModel = require('../../models/groupsModel');
 
+
+
 router.route('/generate').post(auth, async (req, res) => {
     try {
-        const courseName= req.body.courseName;
-        const id = req.user;
-        const user = await userModel.findById(id);
-        const members = await userModel.find({ classes: {$elemMatch: {name: courseName}}}).limit(3);
-        if (members.length > 0) {
-            res.json({
-                courseName,
-                members
-            });
+      const id = req.user
+      const user = await userModel.findById(id);
+      const courseName= req.body.courseName;
+      const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
+    
+      if (members.some(member => member._id === user._id)) { 
+        members.push(user)
+      }
+   
+      if (members.length > 1) {
         
-        const memberObjects = [{
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone
-        }];
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
-            if (members[index]._id !== id) {
-                memberObjects.push({
-                    id: members[index]._id,
-                    name: members[index].name,
-                    email: members[index].email,
-                    phone: members[index].phone
-                })
-            }
         }
+    
+        let memberIds = []
+        members.forEach(member => memberIds.push({id: member.id}))
         const newGroup = new groupsModel({
             course: courseName, 
-            members: memberObjects
+            members: memberIds
         });
-        await newGroup.save();
-        res.json(newGroup);
-        } else {
-            res.json({msg: "Oops, doesn't look like you have any friends"})
-        }
-    } catch (err) {
+        const savedGroup = await newGroup.save();
+
+        res.json({
+            courseName,
+            members
+        });
+    } else {
+        res.json({msg: "Oops, doesn't look like you have any friends"})
+    }
+  } catch (err) {
         res.json({err: err.message});
+
     }
 });
 
-
+router.route('/forUser').get( auth, async (req, res) => {
+    try {
+     
+        const groups = await groupsModel.find({ members: {$elemMatch: {id: req.user}}})
+        res.json(groups)
+    } catch (err) {
+        res.json({err: err.message})
+    }
+    
+});
 
 router.route('/all').get(async (req, res) => {
     const groups = await groupsModel.find()

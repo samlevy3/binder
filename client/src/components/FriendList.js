@@ -4,7 +4,7 @@ import FriendItem from './FriendItem';
 class FriendList extends Component {
     render() {
         return this.props.members.map((member) => (
-            <FriendItem key={member} member={member}/>
+            <FriendItem key={member.id} member={member}/>
         ));
     }
 }
