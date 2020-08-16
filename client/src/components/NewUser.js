@@ -54,7 +54,7 @@ class NewUser extends React.Component {
         <h2>
         Create New Account
         </h2> 
-      <div style={{padding: '10px'}}>
+      <div style={{padding: '20px', marginLeft: '20px'}}>
         <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float:'left'}}>
                 <input 
 			  		type="text" 
