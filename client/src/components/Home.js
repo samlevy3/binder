@@ -13,12 +13,14 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        axios.get('/groups').then(res => this.setState({
-            courses: ["Physics 2212", "Math 2552", "CS 1331"],
-            groupDisplay: false,
-            currGroup: null,
-            groups: res.data
-        }))
+        console.log("Mounting")
+        axios.post('/api/groups/generate', {courseName: "PHYS 2212"}).then(res => console.log(res.data))
+        // axios.get('/groups').then(res => this.setState({
+        //     courses: ["Physics 2212", "Math 2552", "CS 1331"],
+        //     groupDisplay: false,
+        //     currGroup: null,
+        //     groups: res.data
+        // }))
     }
 
     userHasGroups() {
@@ -26,6 +28,7 @@ class Home extends Component {
     }
 
     render() {
+
         if (this.userHasGroups()) {
             return (
                 <div>
