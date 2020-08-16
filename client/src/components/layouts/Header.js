@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from '../logo.png';
 
 class Header extends React.Component {
+  
 	state = {
 		loggedIn: this.props.loggedIn.user
 	}
