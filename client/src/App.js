@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import NewUser from './components/NewUser'
+import NewUser from './components/NewUser';
+import Login from './components/Login';
 
 
 import Home from './components/Home'
@@ -18,8 +19,9 @@ class App extends React.Component {
     }
 
     login = async (email, password) => {
+      console.log("Loggin in")
       if (!email || !password) {
-        return alert("Please Enter All Field");
+        return alert("Please Enter All Fields");
       }
       let loginRes = await axios.post('/api/users/login', {email: email, password: password});
       if (loginRes.status === 401) {
@@ -58,7 +60,7 @@ class App extends React.Component {
 
       <Router>
         <div>
-        <Route render={props => (
+        <Route exact path="/login" render={props => (
          <React.Fragment>
            <Welcome />
           </React.Fragment>
