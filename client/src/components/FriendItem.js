@@ -9,7 +9,6 @@ class FriendItem extends Component {
                     Email: {this.props.member.email}<br></br>
                     Phone Number: {this.props.member.phone}
                 </p>
-               
             </div>
         );
     }

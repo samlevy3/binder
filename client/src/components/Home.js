@@ -82,7 +82,6 @@ class Home extends Component {
     }
 
     generateGroups = async () => {
-
         const courses = this.props.user.classes
         
         if (courses) {
@@ -93,7 +92,9 @@ class Home extends Component {
                 await axios.post('/api/groups/generate', {courseName: courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
                    if (res.data.msg === null) {
                       groups.push(res.data)
+
                     } 
+
                 })
              
             }
