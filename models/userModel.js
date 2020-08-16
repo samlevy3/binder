@@ -14,15 +14,12 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
+    phone: {
+        type: String,
+        required: true
+    },
     classes: [{ 
-        name: {
-            type: String,
-            required: true
-        },
-        _id: {
-            type: String,
-            required: true
-        }
+        type: String
     }]
 })
 

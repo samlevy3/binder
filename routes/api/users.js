@@ -18,6 +18,8 @@ router.route('/login')
             return res.status(401).json({msg: "Wrong password"});
         }
         const token = await jwt.sign({id: isUser._id}, process.env.JWT_SECRET);
+        console.log(token);
+        console.log(isUser);
         return res.json({
             token,
             user: {
@@ -30,21 +32,29 @@ router.route('/login')
 
 router.route('/register')
     .post(async (req, res) => {
-        const { name, email, password } = req.body;
-        const isUser = await userModel.findOne({email: email});
-        console.log(isUser);
-        if (isUser) {
-            return res.json({msg: "User already exists"});
+        try {
+            const { name, email, password, phone, courses } = req.body;
+            console.log(courses);
+            const isUser = await userModel.findOne({email: email});
+            if (isUser) {
+                return res.status(401).json({msg: "User already exists"});
+            }
+            const salt = await bcrypt.genSalt(10);
+            const passHash = await bcrypt.hash(password, salt);
+            const newUser = new userModel({
+                name, 
+                email,
+                password: passHash,
+                phone,
+                classes: courses
+            });
+            console.log(newUser);
+            const savedUser = await newUser.save();
+            return res.json(savedUser);
+        } catch (err) {
+            return res.json({err: err.msg});
         }
-        const salt = await bcrypt.genSalt(10);
-        const passHash = await bcrypt.hash(password, salt);
-        const newUser = new userModel({
-            name, 
-            email,
-            password: passHash
-        });
-        const savedUser = await newUser.save();
-        return res.json(savedUser);
+        
     });
 
 router.route('/isValidToken') 
