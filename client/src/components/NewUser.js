@@ -8,21 +8,25 @@ class NewUser extends React.Component {
         name: '',
         email: '',
         phone: '',
+        password: '',
         courses: []
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        if (this.inputsFilled()) {
-            console.log(this.state);
+        const { name, email, phone, password, courses} = this.state;
+        if (!name || !email || !phone || !password || !courses) {
+            alert("Please enter all fields")
         }
+        this.props.register(name, email, password, phone, courses);
+        this.setState({ name: '',
+        email: '',
+        phone: '',
+        password: '',
+        courses: []});
     }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-    
-    inputsFilled = () => {
-        return !(this.state.name === '' || this.state.email === '' || this.state.phone === '');
-    }
 
     addCourse = (course) => {
         let courses = this.state.courses;
@@ -67,6 +71,16 @@ class NewUser extends React.Component {
 					style={{flex: '10', padding: '5px'}}
 					placeholder="Phone"
 					value={this.state.phone}
+					onChange={this.onChange}
+				/>
+                </li>
+                <li>
+                <input 
+			  		type="password" 
+					name="password"
+					style={{flex: '10', padding: '5px'}}
+					placeholder="Password"
+					value={this.state.password}
 					onChange={this.onChange}
 				/>
                 </li>
