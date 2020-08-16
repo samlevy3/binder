@@ -1,6 +1,7 @@
 import React from 'react';
 
 class Header extends React.Component {
+  
 	state = {
 		loggedIn: this.props.loggedIn.user
 	}
