@@ -3,21 +3,11 @@ import { Link } from 'react-router-dom';
 
 
 class Header extends React.Component {
-	state = {
-		loggedIn: this.props.loggedIn.user
-	}
-	onClick =(e) => {
-		this.setState({
-			loggedIn: !this.state.loggedIn
-		})
-		this.props.logout();
-	}
-
 	render() {
 		return (
 			<header style={headerStyle}>
 				<h1>binder</h1>
-				{this.props.loggedIn.user ? <button style={btnStyle} onClick={this.onClick}>Logout</button>: null}
+				{this.props.loggedIn.user ? (<button style={btnStyle} onClick={this.props.logout}>Logout</button>) : null}
 			</header>
 		);
 	}

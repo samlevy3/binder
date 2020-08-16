@@ -4,34 +4,47 @@ const auth = require ('../../middleware/auth');
 const userModel = require('../../models/userModel');
 const groupsModel = require('../../models/groupsModel')
 
-router.route('/generate').post( async (req, res) => {
-    const courseName= req.body.courseName;
-    const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}})
-    if (members.length > 0) {
-        res.json({
-            courseName,
-            members
-        });
+router.route('/generate').post(auth, async (req, res) => {
+    try {
+        const courseName= req.body.courseName;
+        const id = req.user;
+        const user = await userModel.findById(id);
+        const members = await userModel.find({ classes: {$elemMatch: {name: courseName}}}).limit(3);
+        if (members.length > 0) {
+            res.json({
+                courseName,
+                members
+            });
         
-       
+        const memberObjects = [{
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone
+        }];
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
+            if (members[index]._id !== id) {
+                memberObjects.push({
+                    id: members[index]._id,
+                    name: members[index].name,
+                    email: members[index].email,
+                    phone: members[index].phone
+                })
+            }
         }
-    
-        let memberIds = []
-        members.forEach(member => memberIds.push(member.id))
-        console.log(memberIds)
         const newGroup = new groupsModel({
             course: courseName, 
-            members: memberIds
+            members: memberObjects
         });
-        const savedGroup = await newGroup.save();
-    } else {
-        res.json({msg: "Oops, doesn't look like you have any friends"})
+        await newGroup.save();
+        res.json(newGroup);
+        } else {
+            res.json({msg: "Oops, doesn't look like you have any friends"})
+        }
+    } catch (err) {
+        res.json({err: err.message});
     }
-    
-
-   
 });
 
 
@@ -46,17 +59,18 @@ router.route('/all').get(async (req, res) => {
     
 })
 
-async function updateGroupStatusForMember(member, courseName) {let updatedClasses = member.classes;
+async function updateGroupStatusForMember(member, courseName) {
+    let updatedClasses = member.classes;
     updatedClasses.forEach(course => {
         if (course.name === courseName) {
             course.inGroup = true;
         }
     })
     await userModel.updateOne(
-        {_id: member._id}, 
+        {_id: member._id, classes: courseName}, 
         {
             $set: {
-                classes: updatedClasses
+                inGroup: false
             }
             
         })

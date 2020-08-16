@@ -46,6 +46,7 @@ class App extends React.Component {
     localStorage.setItem("auth-token", "");
     this.setState({token: undefined, user: undefined});
     history.push('/');
+    window.location.reload(false);
   }
     
   checkIfLoggedIn = async () => {
@@ -92,11 +93,11 @@ class App extends React.Component {
         <Route path = '/home' render={props => (
          <React.Fragment>
 
-           <Home user={this.state.userData.user ? this.state.userData.user : null}/>
+           <Home user={this.state.userData.user}/>
 
           </React.Fragment>
         )}/>
-        : <Route path='/home' component={Welcome}/>}
+        : <Route path='/home' component={Login}/>}
         </div>
       </Router>
     );
