@@ -18,8 +18,10 @@ class AddCourse extends React.Component {
 
 
     validCourse = () => {
+        const title = this.state.title;
+
         //Check syntax of course name here
-        return this.state.title !== '';
+        return title !== '';
     }
 
   render() {

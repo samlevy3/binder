@@ -3,6 +3,7 @@ import './App.css';
 import NewUser from './components/NewUser';
 import Login from './components/Login';
 import history from './history';
+import Header from './components/layouts/Header';
 
 import Home from './components/Home'
 import {  Router, Route } from 'react-router-dom';
@@ -68,6 +69,7 @@ class App extends React.Component {
   render() {
     return (
       <Router history={history}>
+        <Header />
         <div>
 
         <Route exact path='/' component={Welcome}/>

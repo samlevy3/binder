@@ -51,76 +51,76 @@ class NewUser extends React.Component {
 
   render() {
     return (
+    <div>
+         New User! Sign up now!
       <div style={{padding: '10px'}}>
-        New User! Sign up now!
-        <form onSubmit={this.onSubmit} style={{display: 'flex'}}>
-            <ul style={{listStyleType: 'none', padding: '10px'}}>
-                <li>
+        <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float:'left'}}>
                 <input 
 			  		type="text" 
 					name="name"
-					style={{flex: '10', padding: '5px'}}
+					style={formStyle}
 					placeholder="Name"
 					value={this.state.name}
 					onChange={this.onChange}
 				/>
-                </li>
-                <li>
                 <input 
 			  		type="email" 
 					name="email"
-					style={{flex: '10', padding: '5px'}}
+					style={formStyle}
 					placeholder="Email"
 					value={this.state.email}
 					onChange={this.onChange}
 				/>
-                </li>
-                <li>
                 <input 
 			  		type="tel" 
 					name="phone"
-					style={{flex: '10', padding: '5px'}}
+					style={formStyle}
 					placeholder="Phone"
 					value={this.state.phone}
 					onChange={this.onChange}
 				/>
-                </li>
-                <li>
                 <input 
 			  		type="password" 
 					name="password"
-					style={{flex: '10', padding: '5px'}}
+					style={formStyle}
 					placeholder="Password"
 					value={this.state.password}
 					onChange={this.onChange}
 				/>
-                </li>
-                <li>
                 <input 
 			  		type="password" 
 					name="confirm_password"
-					style={{flex: '10', padding: '5px'}}
+					style={formStyle}
 					placeholder="Confirm Password"
 					value={this.state.confirm_password}
 					onChange={this.onChange}
 				/>
-                </li>
-                <li>
-                    <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
-                </li>
-                <li>
-                    <AddCourse addCourse={this.addCourse}/>
-                </li>
 				<input 
 					type="submit"
 					value="Submit"
 					className="btn"
-					style={{flex: '1'}}
-				/></ul>
+					style={{flex: '1', float: 'right'}}
+				/>
 			</form>
       </div>
+      <div style={{float: 'right', width: '45%', height: '55%'}}>
+                <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
+                <AddCourse addCourse={this.addCourse}/>
+    </div>
+    </div>
+      
     )
   }
+}
+
+const formStyle = {
+    width: '100%',
+    padding: '12px 20px',
+    margin: '8px 0',
+    display: 'inline-block',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    boxSizing: 'border-box'
 }
 
 export default NewUser;
