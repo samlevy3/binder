@@ -19,7 +19,7 @@ router.route('/generate').post(auth, async (req, res) => {
         }
         let memberIds = []
         members.forEach(member => memberIds.push({id: member._id, name: member.name, phone: member.phone, email: member.email}))
-    
+
         const newGroup = new groupsModel({
             course: courseName, 
             members: memberIds
@@ -48,6 +48,16 @@ router.route('/forUser').get( auth, async (req, res) => {
 
 router.route('/all').get(async (req, res) => {
     const groups = await groupsModel.find()
+    if (groups){
+        res.json(groups)
+    } else {
+        res.json({msg: "Error"})
+    }
+    
+})
+
+router.route('/:course').get(async (req, res) => {
+    const groups = await groupsModel.find({course: req.params.course})
     if (groups){
         res.json(groups)
     } else {
