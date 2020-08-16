@@ -18,8 +18,11 @@ class Home extends Component {
         await axios.get('/api/groups/forUser', {headers: {"x-auth-token": token}} ).then(res => {
             const groups = res.data;
             this.setState({
+<<<<<<< HEAD
+=======
                 groupDisplay: false,
                 currGroup: null,
+>>>>>>> 3f175e3d688b2ac4d44e8f72f7c1d09ef4fba363
                 groups
             })
         });
@@ -31,6 +34,7 @@ class Home extends Component {
     }
 
     render() {
+        
         if (this.state.groups.length > 0) {
             return (
                 <div>
@@ -74,12 +78,25 @@ class Home extends Component {
         })
         this.setState({ 
             groupDisplay: groupSelected ? true : false,
+<<<<<<< HEAD
+            currGroup: groupSelected,
+=======
             currGroup: groupSelected
+>>>>>>> 3f175e3d688b2ac4d44e8f72f7c1d09ef4fba363
         });
         
     }
 
     generateGroups = async () => {
+<<<<<<< HEAD
+        const courses = this.props.user.classes
+        if (courses) {
+            let token = localStorage.getItem("auth-token");
+            let groups = []
+            for (let i = 0; i<courses.length; i++) {
+                console.log(`Generating group for ${courses[i].name}`)
+                await axios.post('/api/groups/generate', {courseName: courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
+=======
         console.log(this.state.courses)
         if (this.state.courses) {
             console.log(this.state.courses)
@@ -88,17 +105,22 @@ class Home extends Component {
             for (let i = 0; i<courses.length; i++) {
                 console.log(`Generating group for ${this.state.courses[i].name}`)
                 await axios.post('/api/groups/generate', {courseName: this.state.courses[i].name}, {headers: {"x-auth-token": token}} ).then(res => {
+>>>>>>> 3f175e3d688b2ac4d44e8f72f7c1d09ef4fba363
                    if (res.data.msg === null) {
                       groups.push(res.data)
                     }
-                    console.log(`Results for ${this.state.courses[i].name}: ${res.data}`)
+                    console.log(`Results for ${courses[i].name}: ${res.data}`)
                 })
              
             }
             
             this.setState({
+<<<<<<< HEAD
+                courses,
+=======
                 groupDisplay: false,
                 currGroup: null,
+>>>>>>> 3f175e3d688b2ac4d44e8f72f7c1d09ef4fba363
                 groups,
             })
         }
