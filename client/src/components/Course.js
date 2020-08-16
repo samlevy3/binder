@@ -21,9 +21,10 @@ class Course extends Component {
 const btnStyle = {
     backgroundColor:  '#fff' ,
     border: "none",
-    borderTop: "dashed #000 1px",
+    borderTop: "dotted #4b2e83 1px",
     height: "100%",
     width: "100%",
+    color: '#4b2e83',
     textAlign: "center",
     padding: "20px"
 
