@@ -10,7 +10,9 @@ class NewUser extends React.Component {
         phone: '',
         password: '',
         confirm_password: '',
-        courses: []
+        courses: [],
+        courseList: [],
+        isSearching: false
     }
 
     onSubmit = (e) => {
@@ -40,18 +42,27 @@ class NewUser extends React.Component {
             inGroup: false,
         }
         let courses = this.state.courses;
+        for (let i = 0; i < courses.length; i++) {
+            if (courses[i].name === courseObject.name) {
+                return alert('Cannot have duplicate classes');
+            }
+        }
         courses.push(courseObject);
-        this.setState({courses});
+        this.setState({courses, courseList: [...this.state.courseList.filter(c => c !== course)]});
+    }
+
+    displayCourses = (courses, inputLength) => {
+        this.setState({courseList: courses, isSearching: inputLength > 0});
     }
 
     deleteCourse = (course) => {
-        this.setState({ courses : [...this.state.courses.filter( c => c.name !== course)]})
+        this.setState({ courses : [...this.state.courses.filter( c => c.name !== course)], courseList: [...this.state.courseList, course]})
     }
 
   render() {
     return (
     <div style={{textAlign: 'center', padding: '10px'}}>
-        <h2>
+        <h2 style={{color: 'rgb(75, 46, 131)', fontWeight: 'bold', fontSize: '1.5em'}}>
         Create New Account
         </h2> 
       <div style={{padding: '20px', marginLeft: '20px'}}>
@@ -100,7 +111,7 @@ class NewUser extends React.Component {
 					type="submit"
 					value="Submit"
 					className="btn"
-					style={{flex: '1', float: 'right'}}
+					style={{flex: '1', width: '30%', backgroundColor: 'rgb(75, 46, 131)', color: 'white', borderRadius: '12px', padding: '10px', fontSize: '1.2em'}}
 				/>
 			</form>
       </div>
@@ -111,14 +122,47 @@ class NewUser extends React.Component {
                 border: '1px solid black', 
                 padding: '10px',
                 borderRadius: '4px',
-                backgroundColor: '#ccc',
+                backgroundColor: 'rgb(75, 46, 131)',
                 margin: '0% 10% 2% 2%',
-
-        }}> <p>
+                color: 'rgb(255, 255, 255)', 
+                fontWeight: 'bold',
+                fontSize: '1.2em'
+        }}>     
                 {this.state.courses.length === 0 ? 'No courses added' : undefined}
-            </p>
             <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
-            <AddCourse addCourse={this.addCourse}/>
+            <AddCourse displayCourses={this.displayCourses} addCourse={this.addCourse}/>
+            { this.state.isSearching ? <div style={{   
+                backgroundColor: 'rgb(75, 46, 131)',
+                position: 'fixed', 
+                width: '35%', 
+                height: '20%',
+                border: '1px solid black', 
+                padding: '10px',
+                borderRadius: '4px',
+                marginTop: '1%',
+                right: '10.2%',
+                overflow: 'scroll'
+            }}>
+                {this.state.courseList.map(
+                    course => 
+                    <button 
+                    style=
+                    {{
+                        color: '#444444',
+                        background: '#F3F3F3',
+                        border: '1px #DADADA solid',
+                        padding: '5px 10px',
+                        borderRadius: '12px',
+                        fontWeight: 'bold',
+                        fontSize: '9pt',
+                        outline: 'none',
+                        margin: '5px'
+                    }}
+                    onClick={this.addCourse.bind(this, course)}>
+                            {course}
+                    </button>
+                )}
+            </div> : null}
     </div>
     </div>
       
@@ -131,7 +175,7 @@ const formStyle = {
     padding: '12px 20px',
     margin: '8px 0',
     display: 'inline-block',
-    border: '1px solid #ccc',
+    border: '1px solid rgb(75, 46, 131)',
     borderRadius: '4px',
     boxSizing: 'border-box'
 }

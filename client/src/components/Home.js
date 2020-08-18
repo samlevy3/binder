@@ -57,7 +57,7 @@ class Home extends Component {
         else {
             return (
                 <div style={centered}>
-                    <p style={{textAlign: "center"}}>
+                    <p style={{textAlign: "center", marginTop: '10%'}}>
                         {this.state.msg}
                     </p>
                     <button style={btnStyle} onClick={this.generateGroups}>Find Groups!</button>
@@ -146,7 +146,9 @@ const courseBoxStyle = {
     color: "#4b2e83",
     padding: '10px ',
     borderRadius: "10px",
-    width: "40%"
+    width: "40%",
+    overflow: "scroll",
+    height: '30%'
 }
 
 export default Home;

@@ -19,27 +19,35 @@ class App extends React.Component {
   }
 
   register = async(name, email, password, phone, classes) => {
-      await axios.post('api/users/register', {
-        name, 
-        email,
-        password,
-        phone,
-        classes
-      })
-      this.login(email, password);
+      try {
+        await axios.post('api/users/register', {
+          name, 
+          email,
+          password,
+          phone,
+          classes
+        })
+        this.login(email, password);
+      } catch (err) {
+        alert (err.response.data.msg);
+      }
   }
 
   login = async (email, password) => {
-      if (!email || !password) {
-        return alert("Please Enter All Fields");
-      }
-      let loginRes = await axios.post('/api/users/login', {email: email, password: password});
+      try {
+        if (!email || !password) {
+          return alert("Please Enter All Fields");
+        }
+        let loginRes = await axios.post('/api/users/login', {email: email, password: password});
 
-      this.setState({userData: {
-        token: loginRes.data.token, user: loginRes.data.user
-      }});
-      localStorage.setItem("auth-token", loginRes.data.token);
-      history.push('/home');
+        this.setState({userData: {
+          token: loginRes.data.token, user: loginRes.data.user
+        }});
+        localStorage.setItem("auth-token", loginRes.data.token);
+        history.push('/home');
+      } catch (err) {
+        alert (err.response.data.msg);
+      }
   }
 
   logout = () => {
@@ -85,6 +93,11 @@ class App extends React.Component {
           </React.Fragment>
         )}/>
       <Route exact path="/" render={props => (
+         <React.Fragment>
+           <Login login={this.login}/>
+          </React.Fragment>
+        )}/>
+        <Route exact path="/login" render={props => (
          <React.Fragment>
            <Login login={this.login}/>
           </React.Fragment>

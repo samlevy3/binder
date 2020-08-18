@@ -10,11 +10,11 @@ router.route('/login')
         const { email, password } = req.body;
         isUser = await userModel.findOne({email: email});
         if (!isUser) {
-            return res.status(401).json({msg: "Wrong email"});
+            return res.status(401).json({msg: "Invalid email :("});
         }
         const isMatch = await bcrypt.compare(password, isUser.password);
         if (!isMatch) {
-            return res.status(401).json({msg: "Wrong password"});
+            return res.status(401).json({msg: "Invalid password :("});
         }
         const token = await jwt.sign({id: isUser._id}, process.env.JWT_SECRET);
         return res.json({

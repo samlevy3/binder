@@ -1,50 +1,44 @@
 import React from 'react';
+import courses from '../classes.json';
 
 class AddCourse extends React.Component {
-
     state = {
-        title: ''
+        title: '',
+        courseOptions: []
     }
 
-    onClick = (e) => {
-        e.preventDefault();
-        if (this.validCourse()) {
-            this.props.addCourse(this.state.title);
-            this.setState({ title: ''});
+    onChange = (e) => {
+        let values = courses.courses.filter(course => {
+            return course.toLowerCase().includes(e.target.value.toLowerCase())
+        }).slice(0,200);
+        if (values.length === 0) {
+            return;
         }
+        this.props.displayCourses(values, e.target.value.length);
+        console.log(values);
+        this.setState(
+            { 
+                title: values[0],
+                courseOptions: values
+            }
+        );
     }
-
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value.toUpperCase() });
-
-
-    validCourse = () => {
-        const title = this.state.title;
-
-        //Check syntax of course name here
-        return title !== '';
+    
+    render() {
+        return (
+            <div style={{display: 'flex'}}>   
+                <input 
+                    autoComplete="off"
+                    type="text" 
+                    name="title"
+                    style={{flex: '10', padding: '5px', fontSize: '12px', width: '80px'}}
+                    placeholder="Search New Course ..."
+                    value={this.props.title}
+                    onChange={this.onChange}
+                />
+            </div>
+        );
     }
-
-  render() {
-    return (
-        <div style={{display: 'flex'}}>
-        <input 
-              type="text" 
-            name="title"
-            style={{flex: '10', padding: '5px', fontSize: '12px', width: '80px'}}
-            placeholder="New Course ..."
-            value={this.state.title}
-            onChange={this.onChange}
-        />
-        <input 
-            type="button"
-            onClick={this.onClick}
-            value="Add Course"
-            className="btn"
-            style={{ fontSize: '12px'}}
-        />
-    </div>
-    )
-  }
 }
 
 export default AddCourse;

@@ -38,7 +38,8 @@ const groupBoxStyle = {
     border: 'solid #4b2e83 2px', 
     padding: '10px 15px',
     width: "100%",
-    borderRadius: '10px'
+    borderRadius: '10px',
+    overflow: 'scroll'
 }
 
 
