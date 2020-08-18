@@ -15,7 +15,6 @@ class AddCourse extends React.Component {
             return;
         }
         this.props.displayCourses(values, e.target.value.length);
-        console.log(values);
         this.setState(
             { 
                 title: values[0],
