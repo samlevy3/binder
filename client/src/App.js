@@ -110,7 +110,8 @@ class App extends React.Component {
 
           </React.Fragment>
         )}/>
-        : <Route path='/home' render={props => (
+        : 
+        <Route path='/home' render={props => (
           <React.Fragment>
             <Login login={this.login}/>
            </React.Fragment>

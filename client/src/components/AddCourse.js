@@ -15,7 +15,6 @@ class AddCourse extends React.Component {
             return;
         }
         this.props.displayCourses(values, e.target.value.length);
-        console.log(values);
         this.setState(
             { 
                 title: values[0],
@@ -31,7 +30,7 @@ class AddCourse extends React.Component {
                     autoComplete="off"
                     type="text" 
                     name="title"
-                    style={{flex: '10', padding: '5px', fontSize: '12px', width: '80px'}}
+                    style={{flex: '10', padding: '5px', fontSize: '12px'}}
                     placeholder="Search New Course ..."
                     value={this.props.title}
                     onChange={this.onChange}

@@ -66,7 +66,7 @@ class NewUser extends React.Component {
         Create New Account
         </h2> 
       <div style={{padding: '20px', marginLeft: '20px'}}>
-        <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float:'left'}}>
+        <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float: 'left'}}>
                 <input 
 			  		type="text" 
 					name="name"
@@ -116,7 +116,7 @@ class NewUser extends React.Component {
 			</form>
       </div>
       <div style={{
-                float: 'right', 
+                float: 'right',
                 width: '35%', 
                 height: '55%', 
                 border: '1px solid black', 
@@ -126,40 +126,31 @@ class NewUser extends React.Component {
                 margin: '0% 10% 2% 2%',
                 color: 'rgb(255, 255, 255)', 
                 fontWeight: 'bold',
-                fontSize: '1.2em'
+                fontSize: '1.2em',
         }}>     
                 {this.state.courses.length === 0 ? 'No courses added' : undefined}
             <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
             <AddCourse displayCourses={this.displayCourses} addCourse={this.addCourse}/>
-            { this.state.isSearching ? <div style={{   
+            { this.state.isSearching ?
+            <div style={{  
                 backgroundColor: 'rgb(75, 46, 131)',
-                position: 'fixed', 
-                width: '35%', 
-                height: '20%',
+                position: 'sticky', 
+                width: '100%', 
                 border: '1px solid black', 
-                padding: '10px',
                 borderRadius: '4px',
                 marginTop: '1%',
                 right: '10.2%',
-                overflow: 'scroll'
+                overflow: 'scroll',
+                height: '25vh'
             }}>
                 {this.state.courseList.map(
                     course => 
                     <button 
-                    style=
-                    {{
-                        color: '#444444',
-                        background: '#F3F3F3',
-                        border: '1px #DADADA solid',
-                        padding: '5px 10px',
-                        borderRadius: '12px',
-                        fontWeight: 'bold',
-                        fontSize: '9pt',
-                        outline: 'none',
-                        margin: '5px'
-                    }}
-                    onClick={this.addCourse.bind(this, course)}>
-                            {course}
+                        key={course}
+                        style={searchStyle}
+                        onClick={this.addCourse.bind(this, course)}
+                    >
+                        {course}
                     </button>
                 )}
             </div> : null}
@@ -178,6 +169,18 @@ const formStyle = {
     border: '1px solid rgb(75, 46, 131)',
     borderRadius: '4px',
     boxSizing: 'border-box'
+}
+
+const searchStyle = {
+    color: '#444444',
+    background: '#F3F3F3',
+    border: '1px #DADADA solid',
+    padding: '5px 10px',
+    borderRadius: '12px',
+    fontWeight: 'bold',
+    fontSize: '9pt',
+    outline: 'none',
+    margin: '5px',
 }
 
 export default NewUser;
