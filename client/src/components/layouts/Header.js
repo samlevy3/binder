@@ -34,13 +34,13 @@ class Header extends React.Component {
 					listStyleType: 'none',
 					display: 'flex',
 					justifyContent: 'space-around',
-					margin: '0'
+					margin: '0',
+					flexDirection: 'column'
 				}}>
 					<li style={logoStyle}>
 						<img src={Logo} alt='logo' style=
 						{{						
-							width: 'auto', 
-							height: '45px', 
+							maxHeight: '45px', 
 							marginRight: '2px', 
 							marginBottom: '0',
 						}}>
@@ -52,21 +52,21 @@ class Header extends React.Component {
 							<>
 								<button onClick={this.onLogin} style={loggedInBtnStyle}>
 									Login
-								</button> |
+								</button> 
 								<button onClick={this.onRegister} style={loggedInBtnStyle}>
 									Register
-								</button> |
+								</button> 
 							</>
 							:
 							<>
 								<button onClick={this.onLogout} style={loggedInBtnStyle}>
 									Logout
-								</button> |
+								</button> 
 							</>
 						}	
 						<button onClick={this.onEthics} style={loggedInBtnStyle}>
 							Ethics
-						</button> |
+						</button> 
 						<a style={loggedInBtnStyle} rel="noopener noreferrer" target="_blank" href="https://github.com/samlevy3/binder">
 							GitHub
 						</a>
@@ -81,22 +81,22 @@ class Header extends React.Component {
 const loggedInBtnStyle = {
 	color: 'white',
 	background: '#412970',
-	border: '1px #DADADA solid',
 	padding: '5px 10px',
-	borderRadius: '12px',
 	fontWeight: 'bold',
 	fontSize: '.7em',
 	outline: 'none',
 	marginLeft: '10px',
 	textDecoration: 'none',
-	cursor: 'pointer'
+	cursor: 'pointer',
+	alignSelf: 'center',
+	border: 'none'
 };
 
 const logoStyle= {
 	fontSize: '2em',
 	fontWeight: 'bold',
 	flex: '1',
-	marginRight: '20%'
+	alignSlef: 'center'
 }
 
 const listStyle = {
@@ -113,7 +113,7 @@ const headerStyle = {
 	color: '#fff', 
 	padding: '20px',
 	fontSize: '2em',
-	marginBottom: '20px'
+	marginBottom: '0',
 }
 
 

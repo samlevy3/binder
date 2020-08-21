@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import FriendItem from './FriendItem';
+import FriendItem from './GroupList';
 
 class FriendList extends Component {
     render() {

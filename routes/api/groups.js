@@ -8,31 +8,27 @@ const groupsModel = require('../../models/groupsModel');
 
 router.route('/generate').post(auth, async (req, res) => {
     try {
-
       const id = req.user
       const user = await userModel.findById(id);
       const courseName= req.body.courseName;
       const smallGroups = await groupsModel.find({ course: courseName});
-      let smallGroup = "";
       for (let index = 0; index < smallGroups.length; index++) {
         if (smallGroups[index].members.length < 4) {
-            smallGroup = smallGroups[index];
-            break;
+            const smallGroup = smallGroups[index];
+            await groupsModel.updateOne({_id: smallGroup._id}, {$addToSet: {members: 
+                {
+                    name: user.name,
+                    id: user._id,
+                    phone: user.phone,
+                    email: user.email
+            }}});
+            await updateGroupStatusForMember(user, courseName);
+            return res.json(smallGroup);
         }
       }
-      if (smallGroup) {
-        const response = await groupsModel.updateOne({_id: smallGroup._id}, {$addToSet: {members: 
-            {
-                name: user.name,
-                id: user._id,
-                phone: user.phone,
-                email: user.email
-        }}});
-        return res.json(smallGroup);
-      }
+
       const members = await userModel.find({ classes: {$elemMatch: {name: courseName, inGroup: false}}}).limit(3)
-        
-      if (members.length > 1) {
+      if (members.length > 0) {
         for (let index = 0; index < members.length; index++) {
             await updateGroupStatusForMember(members[index], courseName);
         }
@@ -43,9 +39,7 @@ router.route('/generate').post(auth, async (req, res) => {
             course: courseName, 
             members: memberIds
         });
-
         await newGroup.save();
-
         res.json(newGroup);
     } else {
         res.json({msg: "Oops, doesn't look like you have any friends"})
