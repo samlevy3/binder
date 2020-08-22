@@ -162,7 +162,7 @@ const listStyle = {
     paddingLeft: '0',
     marginTop: '15px',
     overflow: 'scroll',
-    height: '50vh',
+    maxHeight: '50vh',
     position: 'sticky',
 }   
 

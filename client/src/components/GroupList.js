@@ -7,7 +7,7 @@ class GroupList extends Component {
         return (
             <div style={groupBoxStyle}>
                 {
-                    this.props.group && this.props.group.members.length > 1 ? 
+                    members && members.length > 1 ? 
                         <>
                             {
                                 members.map(member => (
@@ -20,7 +20,7 @@ class GroupList extends Component {
                             } 
                         </>
                         :
-                        <p>No Group Currently Assigned</p>
+                        <p style={style}>No Group Currently Assigned</p>
                 }
             </div>
         );
