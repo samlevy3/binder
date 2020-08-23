@@ -12,9 +12,9 @@ class GroupList extends Component {
                             {
                                 members.map(member => (
                                     <p key={member.id} style={style}>
-                                        Name: {member.name}<br></br>
-                                        Email: {member.email}<br></br>
-                                        Phone Number: {member.phone}
+                                        <span style={{fontWeight: 'bold'}}>Name:</span> {member.name}<br></br>
+                                        <span style={{fontWeight: 'bold'}}>Email:</span> {member.email}<br></br>
+                                        <span style={{fontWeight: 'bold'}}>Phone Number:</span> {member.phone}
                                     </p>
                                 ))
                             } 
@@ -32,20 +32,21 @@ const style = {
     color: '#4b2e83',
     borderTop: "solid #4b2e83 1px",
     paddingTop: "5px",
-    fontSize: "1.2em",
-    width: "100%",
-    textAlign: "center",
+    fontSize: "1.7em",
+    textAlign: 'left',
+    paddingLeft: '37%',
 }
 
 const groupBoxStyle = {
     border: 'solid #4b2e83 2px', 
     padding: '10px 15px',
     borderRadius: '10px',
-    maxWidth: '30vw',
+    maxWidth: '60vw',
     overflow: 'scroll',
     marginTop: '2px',
     flex: '2',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    textAlign: "center",
 }
 
 
