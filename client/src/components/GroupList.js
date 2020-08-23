@@ -7,7 +7,7 @@ class GroupList extends Component {
         return (
             <div style={groupBoxStyle}>
                 {
-                    members && members.length > 1 ? 
+                    members && members.length > 0 ? 
                         <>
                             {
                                 members.map(member => (

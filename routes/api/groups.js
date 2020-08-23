@@ -28,7 +28,7 @@ router.route('/generate').post(auth, async (req, res) => {
                     email: user.email
             }}});
             await updateGroupStatusForMember(user, courseName);
-            const newGroup = await groupsModel.find({_id: smallGroup._id});
+            const newGroup = await groupsModel.findOne({_id: smallGroup._id});
             return res.json(newGroup);
         }
       }
