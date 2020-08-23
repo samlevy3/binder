@@ -108,9 +108,7 @@ class Home extends Component {
 const classBoxStyle = {
     display: 'flex',
     overflow: 'scroll',
-    alignItems: 'center',
     marginTop: '1px',
-    justifyContent: 'center'
 }
 
 
