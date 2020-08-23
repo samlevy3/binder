@@ -15,6 +15,11 @@ router.route('/generate').post(auth, async (req, res) => {
       for (let index = 0; index < smallGroups.length; index++) {
         if (smallGroups[index].members.length < 4) {
             const smallGroup = smallGroups[index];
+            for (let i = 0; i < smallGroup.members.length; i++) {
+                if (smallGroup.members[i].name === user.name) {
+                    return res.json(smallGroup);
+                }
+            }
             await groupsModel.updateOne({_id: smallGroup._id}, {$addToSet: {members: 
                 {
                     name: user.name,
@@ -23,7 +28,8 @@ router.route('/generate').post(auth, async (req, res) => {
                     email: user.email
             }}});
             await updateGroupStatusForMember(user, courseName);
-            return res.json(smallGroup);
+            const newGroup = await groupsModel.find({_id: smallGroup._id});
+            return res.json(newGroup);
         }
       }
 

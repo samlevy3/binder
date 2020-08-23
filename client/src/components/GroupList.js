@@ -41,9 +41,11 @@ const groupBoxStyle = {
     border: 'solid #4b2e83 2px', 
     padding: '10px 15px',
     borderRadius: '10px',
-    width: '50vh',
+    maxWidth: '30vw',
     overflow: 'scroll',
     marginTop: '2px',
+    flex: '2',
+    alignSelf: 'center'
 }
 
 

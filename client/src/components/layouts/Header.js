@@ -80,7 +80,7 @@ class Header extends React.Component {
 
 const loggedInBtnStyle = {
 	color: 'white',
-	background: '#412970',
+	background: '#4b2e83',
 	padding: '5px 10px',
 	fontWeight: 'bold',
 	fontSize: '.7em',
@@ -109,7 +109,7 @@ const listStyle = {
 
 const headerStyle = {
 	textAlign: 'center', 
-	backgroundColor: '#412970', 
+	backgroundColor: '#4b2e83', 
 	color: '#fff', 
 	padding: '20px',
 	fontSize: '2em',

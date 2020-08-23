@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import arrow from './arrow.png';
 import sideArrow from './sideArrow.png';
 import GroupList from './GroupList';
 
 class Home extends Component {
     state = {
         courses: this.props.user.classes,
-        courseDisplay: false,
+        courseDisplay: true,
         currGroup: undefined,
-        groups: [],
-        msg: ""
- 
+        groups: [], 
     }
     courseClicked = (name) => {
         let groupSelected = undefined;
@@ -30,20 +27,21 @@ class Home extends Component {
 
     displayGroup = (course) => {
         for (let i = 0; i < this.state.groups.length; i++) {
-            if (this.state.groups[i].course === course.name) 
+            if (this.state.groups[i].course === course.name) {
+                this.showCourses();
                 return this.setState({currGroup: this.state.groups[i]});
-            else {
+            } else {
                 this.setState({currGroup: null});
             }
         }
     }
 
     showCourses = () => {
-        this.setState({courseDisplay: !this.state.courseDisplay})
+        this.setState({courseDisplay: true})
     }
 
     generateGroups = async () => {
-        const courses = this.props.user.classes;
+        const courses = this.state.courses;
         if (courses) {
             const token = localStorage.getItem("auth-token");
             let groups = [];
@@ -54,12 +52,9 @@ class Home extends Component {
                     } 
                 })
             }
-            let showMsg = groups.length === 0
             this.setState({
                 courses,
                 groups,
-                msg: showMsg ? "Unfortunately there are no available study partners at this time. Please try again later." : undefined
-
             })
         }
         this.checkGroups()   
@@ -84,28 +79,18 @@ class Home extends Component {
     render()    { 
         if (this.state.groups.length > 0) {
             return (
-                <div>
-                    <div style={dropdownStyle}>
-                        Classes
-                        <img alt='Dropdown' onClick={this.showCourses} style={arrowStyle} src={arrow}/>
+                <div style={{textAlign: 'center', height: '100vh'}}>
+                    <div style={classBoxStyle}>
                         {
-                            this.state.courseDisplay ? 
-                                <>
-                                    <ul style={listStyle}>
-                                        {
-                                            this.state.courses.map(course => (
-                                                <li onClick={this.displayGroup.bind(this, course)} style={btnStyle} key={course._id}>
-                                                    {course.name}
-                                                    <img alt='arrow' style={arrowStyle} src={sideArrow}/>
-                                                </li>
-                                            ))
-                                        }       
-                                    </ul>
-                                </>
-                            : <></>
-                        }
-                    </div>
-                    <div style={boxStyle}>
+                            this.state.courses.map(course => (
+                                <div key={course._id} style={classStyle} onClick={this.displayGroup.bind(this, course)}>
+                                    {course.name}
+                                    <img alt='arrow' style={arrowStyle} src={sideArrow}/>
+                                </div>
+                            ))
+                        }       
+                    </div>                 
+                    <div style={centered}>
                         {this.state.courseDisplay && this.state.currGroup !== undefined ? <GroupList user={this.props.user} group={this.state.currGroup} />: null}
                     </div>
                 </div>
@@ -120,24 +105,14 @@ class Home extends Component {
     }
 }
 
-const boxStyle = {
-    float: 'left',
+const classBoxStyle = {
+    display: 'flex',
+    overflow: 'scroll',
+    alignItems: 'center',
+    marginTop: '1px',
+    justifyContent: 'center'
 }
 
-const dropdownStyle = {
-    margin: '0px',
-    padding: '20px',
-    backgroundColor: '#412970',
-    width: '20%',
-    minWidth: '300px',
-    fontSize: '1.6em',
-    fontWeight: 'bold',
-    color: 'white',
-    borderTop: '2px solid white',
-    borderRight: '2px solid white',
-    float: 'left',
-    paddingLeft: '5px',
-}
 
 const arrowStyle = {
     display: 'inline',
@@ -146,31 +121,21 @@ const arrowStyle = {
     cursor: 'pointer',
 }
 
-const btnStyle = {
+const classStyle = {
+    backgroundColor: '#85754d',
     color: 'white',
-    fontSize: ".7em",
-    fontWeight: "bold",
-    margin: '0px',
-    padding: '15px',
-    listStyleType: 'none',
-    border: '1px solid white',
-    cursor: 'pointer'
+    padding: '20px 12px',
+    fontSize: '1.3em',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginRight: '2px',
 }
-
-const listStyle = {
-    margin: '0',
-    paddingLeft: '0',
-    marginTop: '15px',
-    overflow: 'scroll',
-    maxHeight: '50vh',
-    position: 'sticky',
-}   
 
 const centered = {
     marginTop: "30px",
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
 }
 
 const groupButtonStyle = {
@@ -181,5 +146,42 @@ const groupButtonStyle = {
     fontSize: '1em',
     textAlign: 'center'
 }
+
+// const dropdownStyle = {
+//     margin: '0px',
+//     padding: '20px',
+//     backgroundColor: '#412970',
+//     width: '20%',
+//     minWidth: '300px',
+//     fontSize: '1.6em',
+//     fontWeight: 'bold',
+//     color: 'white',
+//     borderTop: '2px solid white',
+//     borderRight: '2px solid white',
+//     borderRadius: '2px',
+//     float: 'left',
+//     paddingLeft: '5px',
+// }
+
+// const btnStyle = {
+//     color: 'white',
+//     fontSize: ".7em",
+//     fontWeight: "bold",
+//     margin: '0px',
+//     padding: '15px',
+//     listStyleType: 'none',
+//     border: '1px solid white',
+//     cursor: 'pointer',
+//     float: 'right'
+// }
+
+// const listStyle = {
+//     margin: '0',
+//     paddingLeft: '0',
+//     marginTop: '15px',
+//     overflow: 'scroll',
+//     maxHeight: '50vh',
+//     float: 'right'
+// }   
 
 export default Home;

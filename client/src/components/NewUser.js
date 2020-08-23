@@ -62,7 +62,7 @@ class NewUser extends React.Component {
   render() {
     return (
     <div style={{textAlign: 'center', padding: '10px'}}>
-        <h2 style={{color: 'rgb(75, 46, 131)', fontWeight: 'bold', fontSize: '1.5em'}}>
+        <h2 style={{color: '#4b2e83', fontWeight: 'bold', fontSize: '1.5em'}}>
         Create New Account
         </h2> 
       <div style={{padding: '20px', marginLeft: '20px'}}>
@@ -111,7 +111,7 @@ class NewUser extends React.Component {
 					type="submit"
 					value="Submit"
 					className="btn"
-					style={{flex: '1', width: '30%', backgroundColor: 'rgb(75, 46, 131)', color: 'white', borderRadius: '12px', padding: '10px', fontSize: '1.2em'}}
+					style={{flex: '1', width: '30%', backgroundColor: '#4b2e83', color: 'white', borderRadius: '12px', padding: '10px', fontSize: '1.2em'}}
 				/>
 			</form>
       </div>
@@ -122,7 +122,7 @@ class NewUser extends React.Component {
                 border: '1px solid black', 
                 padding: '10px',
                 borderRadius: '4px',
-                backgroundColor: 'rgb(75, 46, 131)',
+                backgroundColor: '#4b2e83',
                 margin: '0% 10% 2% 2%',
                 color: 'rgb(255, 255, 255)', 
                 fontWeight: 'bold',
@@ -133,7 +133,7 @@ class NewUser extends React.Component {
             <AddCourse displayCourses={this.displayCourses} addCourse={this.addCourse}/>
             { this.state.isSearching ?
             <div style={{  
-                backgroundColor: 'rgb(75, 46, 131)',
+                backgroundColor: '#4b2e83',
                 position: 'sticky', 
                 width: '100%', 
                 border: '1px solid black', 
@@ -141,7 +141,7 @@ class NewUser extends React.Component {
                 marginTop: '1%',
                 right: '10.2%',
                 overflow: 'scroll',
-                height: '25vh'
+                height: '20vh'
             }}>
                 {this.state.courseList.map(
                     course => 
@@ -172,13 +172,13 @@ const formStyle = {
 }
 
 const searchStyle = {
-    color: '#444444',
-    background: '#F3F3F3',
-    border: '1px #DADADA solid',
+    color: 'white',
+    background: '#4b2e83',
+    border: '2px #DADADA solid',
     padding: '5px 10px',
     borderRadius: '12px',
     fontWeight: 'bold',
-    fontSize: '9pt',
+    fontSize: '.7em',
     outline: 'none',
     margin: '5px',
 }
