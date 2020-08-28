@@ -66,7 +66,8 @@ class NewUser extends React.Component {
         Create New Account
         </h2> 
       <div style={{padding: '20px', marginLeft: '20px'}}>
-        <form onSubmit={this.onSubmit} style={{display: 'block', width: '45%', float: 'left'}}>
+        <form onSubmit={this.onSubmit} style={{textAlign: 'left'}}>
+                Name: 
                 <input 
 			  		type="text" 
 					name="name"
@@ -75,6 +76,7 @@ class NewUser extends React.Component {
 					value={this.state.name}
 					onChange={this.onChange}
 				/>
+                Please Enter Valid UW Email Address: 
                 <input 
 			  		type="email" 
 					name="email"
@@ -83,6 +85,7 @@ class NewUser extends React.Component {
 					value={this.state.email}
 					onChange={this.onChange}
 				/>
+                Phone Number: 
                 <input 
 			  		type="tel" 
 					name="phone"
@@ -91,6 +94,7 @@ class NewUser extends React.Component {
 					value={this.state.phone}
 					onChange={this.onChange}
 				/>
+                Password:
                 <input 
 			  		type="password" 
 					name="password"
@@ -99,6 +103,7 @@ class NewUser extends React.Component {
 					value={this.state.password}
 					onChange={this.onChange}
 				/>
+                Confirm Password:
                 <input 
 			  		type="password" 
 					name="confirm_password"
@@ -107,54 +112,55 @@ class NewUser extends React.Component {
 					value={this.state.confirm_password}
 					onChange={this.onChange}
 				/>
+                <div style={{
+                    height: '55%', 
+                    border: '1px solid black', 
+                    padding: '10px',
+                    borderRadius: '4px',
+                    backgroundColor: '#4b2e83',
+                    margin: 'auto',
+                    color: 'rgb(255, 255, 255)', 
+                    fontWeight: 'bold',
+                    fontSize: '1.2em',
+                    textAlign: 'Center'
+                }}>     
+                    {this.state.courses.length === 0 ? 'No courses added' : undefined}
+                        <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
+                        <AddCourse displayCourses={this.displayCourses} addCourse={this.addCourse}/>
+                        { this.state.isSearching ?
+                            <div style={{  
+                                backgroundColor: '#4b2e83',
+                                position: 'sticky', 
+                                width: '100%', 
+                                border: '1px solid black', 
+                                borderRadius: '4px',
+                                marginTop: '1%',
+                                right: '10.2%',
+                                overflow: 'scroll',
+                                height: '20vh'
+                            }}>
+                                {this.state.courseList.map(
+                                    course => 
+                                    <button 
+                                        key={course}
+                                        style={searchStyle}
+                                        onClick={this.addCourse.bind(this, course)}
+                                    >
+                                        {course}
+                                    </button>
+                                )}
+                            </div> : 
+                            null
+                        }
+                </div>
 				<input 
 					type="submit"
 					value="Submit"
 					className="btn"
-					style={{flex: '1', width: '30%', backgroundColor: '#4b2e83', color: 'white', borderRadius: '12px', padding: '10px', fontSize: '1.2em'}}
+					style={{marginTop: '10px', width: '30%', backgroundColor: '#4b2e83', color: 'white', borderRadius: '12px', padding: '10px', fontSize: '1.2em'}}
 				/>
 			</form>
       </div>
-      <div style={{
-                float: 'right',
-                width: '35%', 
-                height: '55%', 
-                border: '1px solid black', 
-                padding: '10px',
-                borderRadius: '4px',
-                backgroundColor: '#4b2e83',
-                margin: '0% 10% 2% 2%',
-                color: 'rgb(255, 255, 255)', 
-                fontWeight: 'bold',
-                fontSize: '1.2em',
-        }}>     
-                {this.state.courses.length === 0 ? 'No courses added' : undefined}
-            <CourseList courses={this.state.courses} deleteCourse={this.deleteCourse}/>
-            <AddCourse displayCourses={this.displayCourses} addCourse={this.addCourse}/>
-            { this.state.isSearching ?
-            <div style={{  
-                backgroundColor: '#4b2e83',
-                position: 'sticky', 
-                width: '100%', 
-                border: '1px solid black', 
-                borderRadius: '4px',
-                marginTop: '1%',
-                right: '10.2%',
-                overflow: 'scroll',
-                height: '20vh'
-            }}>
-                {this.state.courseList.map(
-                    course => 
-                    <button 
-                        key={course}
-                        style={searchStyle}
-                        onClick={this.addCourse.bind(this, course)}
-                    >
-                        {course}
-                    </button>
-                )}
-            </div> : null}
-    </div>
     </div>
       
     )
@@ -168,7 +174,7 @@ const formStyle = {
     display: 'inline-block',
     border: '1px solid rgb(75, 46, 131)',
     borderRadius: '4px',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
 }
 
 const searchStyle = {
